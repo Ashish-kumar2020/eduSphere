@@ -233,11 +233,43 @@ adminRouter.post("/createCourse", async (req, res) => {
 });
 
 // delete a course
-adminRouter.delete("/course/:id", async (req, res) => {
-  const { id } = req.params;
-  res.status(200).json({
-    messsage: "Delete a course",
-  });
+adminRouter.delete("/delete", async (req, res) => {
+  const { courseID, adminID } = req.body;
+
+  try {
+    if (!courseID || !adminID) {
+      return res.status(400).json({
+        message: "Please Pass correct ID",
+      });
+    }
+
+    const searchCourse = await adminModel.findOne({ adminID });
+    if (!searchCourse) {
+      return res.status(400).json({
+        message: "Admin ID is not valid. Please connect with your operator",
+      });
+    }
+    // if admin found
+    const courseToBeDeleted = new Types.ObjectId(courseID);
+    const findCourse = searchCourse.adminCourses.findIndex((t) =>
+      t.courseID.equals(courseToBeDeleted)
+    );
+    if (findCourse === -1) {
+      return res.status(404).json({
+        message: "Course not found or already deleted",
+      });
+    }
+    searchCourse.adminCourses.splice(findCourse, 1);
+    await searchCourse.save();
+    return res.status(200).json({
+      message: "Course Deleted Successfully",
+    });
+  } catch (error) {
+    console.error("Error while deleting course:", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
 });
 
 // Edit a course
