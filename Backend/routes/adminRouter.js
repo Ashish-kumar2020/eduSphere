@@ -233,7 +233,7 @@ adminRouter.post("/createCourse", async (req, res) => {
 });
 
 // delete a course
-adminRouter.delete("/delete", async (req, res) => {
+adminRouter.delete("/deleteCourse", async (req, res) => {
   const { courseID, adminID } = req.body;
 
   try {
