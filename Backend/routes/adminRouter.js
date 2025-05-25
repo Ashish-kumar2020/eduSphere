@@ -149,11 +149,87 @@ adminRouter.get("/fetchAllAdminCourses", async (req, res) => {
   }
 });
 
-// create new course
+// create a course
 adminRouter.post("/createCourse", async (req, res) => {
-  res.status(200).json({
-    messsage: "Course Created Successfully",
-  });
+  const {
+    title,
+    description,
+    courseContent,
+    courseLearning,
+    courseAuthorDetail,
+    coursePrice,
+    courseValidatiy,
+    courseMaterial,
+    courseRequirements,
+    courseCategory,
+    isCourseActive,
+    adminID,
+  } = req.body;
+
+  try {
+    // Validate required fields
+    if (
+      !title ||
+      !description ||
+      !Array.isArray(courseContent) ||
+      courseContent.length === 0 ||
+      !Array.isArray(courseLearning) ||
+      courseLearning.length === 0 ||
+      !courseAuthorDetail ||
+      typeof courseAuthorDetail !== "object" ||
+      coursePrice == null ||
+      !courseValidatiy ||
+      !Array.isArray(courseMaterial) ||
+      courseMaterial.length === 0 ||
+      !Array.isArray(courseRequirements) ||
+      courseRequirements.length === 0 ||
+      !courseCategory ||
+      typeof isCourseActive !== "boolean" ||
+      !adminID
+    ) {
+      return res.status(400).json({
+        message: "All Fields Are Mandatory and should be in correct format",
+      });
+    }
+
+    // Check for admin
+    const searchForAdmin = await adminModel.findOne({ adminID });
+    if (!searchForAdmin) {
+      return res.status(400).json({
+        message: "Admin ID not valid, Please connect with your operator",
+      });
+    }
+
+    // Create new course object
+    const courseID = new mongoose.Types.ObjectId();
+    const newCourse = {
+      title,
+      description,
+      courseContent,
+      courseLearning,
+      courseAuthorDetail,
+      coursePrice,
+      courseValidatiy,
+      courseMaterial,
+      courseRequirements,
+      courseCategory,
+      isCourseActive,
+      courseID,
+    };
+
+    searchForAdmin.adminCourses.push(newCourse);
+    await searchForAdmin.save();
+
+    res.status(200).json({
+      message: "Course Created Successfully",
+      courseID,
+    });
+  } catch (error) {
+    console.error("Error during creating course", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
 });
 
 // delete a course

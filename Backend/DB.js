@@ -3,18 +3,28 @@ const Schema = mongoose.Schema;
 const ObjectId = mongoose.ObjectId;
 
 const courseSchema = new Schema({
-  title: String, // course name
-  description: String, // About Course
-  courseContent: String, // Course Videos
-  courseLearning: String, // What will you learn
-  courseAuthorDetail: String, // Author Name
-  coursePrice: Number, // course price
-  courseValidatiy: String, // course active duration
-  courseID: ObjectId,
-  courseMaterial: String, // What all things will be aviable in this course
-  courseRequirements: String, // What all are the prerequsities
-  courseCategory: String, // type of course - computer, webdev,andriod
-  isCourseActive: Boolean,
+  title: { type: String, required: true }, // course name
+  description: { type: String, required: true }, // about course
+  courseContent: { type: [String], required: true }, // list of topics
+  courseLearning: { type: [String], required: true }, // what you'll learn
+  courseAuthorDetail: {
+    name: { type: String, required: true },
+    experience: { type: String },
+    bio: { type: String },
+  },
+  coursePrice: { type: Number, required: true }, // price
+  courseValidatiy: { type: String, required: true }, // duration
+  courseID: { type: ObjectId, required: true },
+  courseMaterial: [
+    {
+      type: { type: String, required: true }, // video/pdf/quiz
+      title: { type: String, required: true },
+      url: { type: String, required: true },
+    },
+  ],
+  courseRequirements: { type: [String], required: true }, // prerequisites
+  courseCategory: { type: String, required: true }, // webdev, etc.
+  isCourseActive: { type: Boolean, default: true },
 });
 
 const userSchema = new Schema({
