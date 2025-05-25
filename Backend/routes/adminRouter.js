@@ -55,6 +55,11 @@ adminRouter.post("/signup", async (req, res) => {
 // Login Endpoint
 adminRouter.post("/signin", async (req, res) => {
   const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({
+      message: "All Fields are mandatory",
+    });
+  }
   try {
     const searchUser = await adminModel.findOne({ email });
     if (!searchUser) {
@@ -87,10 +92,31 @@ adminRouter.post("/signin", async (req, res) => {
 });
 
 // user profile
-adminRouter.post("/fetchUserDetails", async (req, res) => {
-  res.status(200).json({
-    messsage: "Get Loged in user details",
-  });
+adminRouter.post("/fetchAdminDetails", async (req, res) => {
+  const { adminID } = req.body;
+  try {
+    if (!adminID) {
+      return res.status(400).json({
+        message: "All Fields are mandatory",
+      });
+    }
+    const checkForAdminDetails = await adminModel.findOne({ adminID });
+    if (!checkForAdminDetails) {
+      return res.status(400).json({
+        message:
+          "No Admin Found with the given ID, Please connect with the Operator",
+      });
+    }
+    res.status(200).json({
+      messsage: "Admin Details Fetched Successfully",
+      checkForAdminDetails,
+    });
+  } catch (error) {
+    console.log("Error during fetching admin details", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
 });
 
 // fetch all Admin Courses
