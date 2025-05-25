@@ -92,8 +92,8 @@ adminRouter.post("/signin", async (req, res) => {
 });
 
 // user profile
-adminRouter.post("/fetchAdminDetails", async (req, res) => {
-  const { adminID } = req.body;
+adminRouter.get("/fetchAdminDetails", async (req, res) => {
+  const { adminID } = req.query;
   try {
     if (!adminID) {
       return res.status(400).json({
@@ -120,10 +120,33 @@ adminRouter.post("/fetchAdminDetails", async (req, res) => {
 });
 
 // fetch all Admin Courses
-adminRouter.post("/fetchAllAdminCourses", async (req, res) => {
-  res.status(200).json({
-    messsage: "Get all admin courses",
-  });
+adminRouter.get("/fetchAllAdminCourses", async (req, res) => {
+  const { adminID } = req.query;
+  try {
+    if (!adminID) {
+      return res.status(400).json({
+        message:
+          "AdminID is not passed correctly , Please connect with your Operator",
+      });
+    }
+
+    const searchForAdmin = await adminModel.findOne({ adminID });
+    if (!searchForAdmin) {
+      return res.status(400).json({
+        message: "No Admin ID Found, Please connect with the operator",
+      });
+    }
+
+    res.status(200).json({
+      messsage: "Fetched All Admin Courses Successfully",
+      courses: searchForAdmin.adminCourses,
+    });
+  } catch (error) {
+    console.log("Error during fetching admin courses", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
 });
 
 // create new course
