@@ -3,47 +3,87 @@ const { adminModel, courseModel } = require("../DB");
 const { mongoose, Types } = require("mongoose");
 const adminRouter = Router();
 const bcrypt = require("bcrypt");
-
+const jwt = require("jsonwebtoken");
 adminRouter.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password, userName } = req.body;
-  if (
-    !firstName ||
-    !lastName ||
-    !userName ||
-    !email ||
-    !userName ||
-    !password
-  ) {
-    return res.status(400).json({
-      messsage: "All Fields are Mandatory",
+  try {
+    if (
+      !firstName ||
+      !lastName ||
+      !userName ||
+      !email ||
+      !userName ||
+      !password
+    ) {
+      return res.status(400).json({
+        messsage: "All Fields are Mandatory",
+      });
+    }
+    const searchUser = await adminModel.findOne({ email });
+    if (searchUser) {
+      return res.status(400).json({
+        messsage: "User already exists please try to login",
+      });
+    }
+    const hashedPassword = await bcrypt.hash(password, 5);
+    const adminID = new Types.ObjectId();
+    const user = await adminModel.create({
+      userName,
+      firstName,
+      lastName,
+      email,
+      adminID,
+      password: hashedPassword,
+    });
+    return res.status(200).json({
+      messsage: "User Account Created Successfully",
+      user,
+    });
+  } catch (error) {
+    console.log("Error during signup", error);
+    if (error.name === "MongoServerError" && error.code === 11000) {
+      return res.status(409).json({
+        message: "Email already exists",
+      });
+    }
+    res.status(500).json({
+      message: "Internal Server Error",
     });
   }
-  const searchUser = await adminModel.findOne({ email });
-  if (searchUser) {
-    return res.status(400).json({
-      messsage: "User already exists please try to login",
-    });
-  }
-  const hashedPassword = await bcrypt.hash(password, 5);
-  const adminID = new Types.ObjectId();
-  const user = await adminModel.create({
-    userName,
-    firstName,
-    lastName,
-    email,
-    password: hashedPassword,
-  });
-  return res.status(200).json({
-    messsage: "User Account Created Successfully",
-    user,
-  });
 });
 
 // Login Endpoint
 adminRouter.post("/signin", async (req, res) => {
-  res.status(200).json({
-    messsage: "Signin Endpoint",
-  });
+  const { email, password } = req.body;
+  try {
+    const searchUser = await adminModel.findOne({ email });
+    if (!searchUser) {
+      return res.status(400).json({
+        messsage: "No User found, Please try to signup",
+      });
+    }
+    const matchPassword = await bcrypt.compare(password, searchUser.password);
+    if (!matchPassword) {
+      return res.status(400).json({
+        messsage: "Wrong Credentials",
+      });
+    }
+    if (matchPassword && searchUser) {
+      const token = jwt.sign({ user: searchUser.email }, process.env.JWT_AUTH, {
+        expiresIn: "1h",
+      });
+      return res.status(200).json({
+        messsage: "User LoggedIn Successfully",
+        searchUser,
+        token,
+      });
+    }
+  } catch (error) {
+    console.log("Error during signin", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
 });
 
 // user profile
