@@ -23,6 +23,7 @@ const courseSchema = new Schema({
   courseID: ObjectID,
   courseMaterial: String, // What all things will be aviable in this course
   courseRequirements: String, // What all are the prerequsities
+  courseCategory: String, // type of course - computer, webdev,andriod
 });
 
 const adminSchema = new Schema({
