@@ -18,14 +18,16 @@ userRouter.post("/signin", async (req, res) => {
 });
 
 // user profile
-userRouter.post("/fetchUserDetails", async (req, res) => {
+userRouter.get("/userDetails/:id", async (req, res) => {
+  const { id } = req.params;
   res.status(200).json({
     messsage: "Get Loged in user details",
   });
 });
 
 // fetch users purchased courses
-userRouter.post("/fetchPurchasedCourses", async (req, res) => {
+userRouter.get("/purchasedCourses/:id", async (req, res) => {
+  const { id } = req.params;
   res.status(200).json({
     messsage: "Get Logged in user purchased courses",
   });
@@ -39,7 +41,7 @@ userRouter.post("/enrollCourse", async (req, res) => {
 });
 
 // open any selected contes - when user click on any of the purchased courses this will return the detials of that course
-userRouter.post("/getSelectedCourse", async (req, res) => {
+userRouter.get("/selectedCourse/:id", async (req, res) => {
   res.status(200).json({
     messsage: "Return selected course",
   });
