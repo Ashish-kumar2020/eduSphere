@@ -1,16 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const ObjectID = mongoose.ObjectID;
-
-const userSchema = new Schema({
-  firstName: String,
-  lastName: String,
-  userName: String,
-  email: { type: String, unique: true },
-  password: String,
-  userID: ObjectID,
-  userCourses: [courseSchema],
-});
+const ObjectId = mongoose.ObjectId;
 
 const courseSchema = new Schema({
   title: String, // course name
@@ -20,11 +10,21 @@ const courseSchema = new Schema({
   courseAuthorDetail: String, // Author Name
   coursePrice: Number, // course price
   courseValidatiy: String, // course active duration
-  courseID: ObjectID,
+  courseID: ObjectId,
   courseMaterial: String, // What all things will be aviable in this course
   courseRequirements: String, // What all are the prerequsities
   courseCategory: String, // type of course - computer, webdev,andriod
   isCourseActive: Boolean,
+});
+
+const userSchema = new Schema({
+  firstName: String,
+  lastName: String,
+  userName: String,
+  email: { type: String, unique: true },
+  password: String,
+  userID: ObjectId,
+  userCourses: [courseSchema],
 });
 
 const adminSchema = new Schema({
@@ -33,7 +33,7 @@ const adminSchema = new Schema({
   email: { type: String, unique: true },
   userName: String,
   password: String,
-  adminID: ObjectID,
+  adminID: ObjectId,
   adminCourses: [courseSchema],
 });
 

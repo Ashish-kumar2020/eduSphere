@@ -1,11 +1,41 @@
 const { Router } = require("express");
 const { adminModel, courseModel } = require("../DB");
-const { mongoose } = require("mongoose");
+const { mongoose, Types } = require("mongoose");
 const adminRouter = Router();
+const bcrypt = require("bcrypt");
 
 adminRouter.post("/signup", async (req, res) => {
-  res.status(200).json({
-    messsage: "Signup Endpoint",
+  const { firstName, lastName, email, password, userName } = req.body;
+  if (
+    !firstName ||
+    !lastName ||
+    !userName ||
+    !email ||
+    !userName ||
+    !password
+  ) {
+    return res.status(400).json({
+      messsage: "All Fields are Mandatory",
+    });
+  }
+  const searchUser = await adminModel.findOne({ email });
+  if (searchUser) {
+    return res.status(400).json({
+      messsage: "User already exists please try to login",
+    });
+  }
+  const hashedPassword = await bcrypt.hash(password, 5);
+  const adminID = new Types.ObjectId();
+  const user = await adminModel.create({
+    userName,
+    firstName,
+    lastName,
+    email,
+    password: hashedPassword,
+  });
+  return res.status(200).json({
+    messsage: "User Account Created Successfully",
+    user,
   });
 });
 
