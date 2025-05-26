@@ -273,8 +273,61 @@ adminRouter.delete("/deleteCourse", async (req, res) => {
 });
 
 // Edit a course
-adminRouter.put("/course/:id", async (req, res) => {
-  const { id } = req.params;
+adminRouter.put("/editCourse", async (req, res) => {
+  const {
+    adminID,
+    courseID,
+    title,
+    description,
+    courseContent,
+    courseLearning,
+    courseAuthorDetail,
+    coursePrice,
+    courseValidatiy,
+    courseMaterial,
+    courseRequirements,
+    courseCategory,
+    isCourseActive,
+  } = req.body;
+  try {
+    if (!adminID || !courseID) {
+      return res.status(400).json({
+        message: "All Fields Are mandatory, Please connect with your operator",
+      });
+    }
+    const searchForAdmin = await adminModel.findOne({ adminID });
+    if (!searchForAdmin) {
+      return res.status(400).json({
+        message: "Admin ID Not Found, Please connect with your operator",
+      });
+    }
+    if (title) searchForAdmin.adminCourses.title = title;
+    if (description) searchForAdmin.adminCourses.description = description;
+    if (courseContent)
+      searchForAdmin.adminCourses.courseContent = courseContent;
+    if (courseLearning)
+      searchForAdmin.adminCourses.courseLearning = courseLearning;
+    if (courseAuthorDetail)
+      searchForAdmin.adminCourses.courseAuthorDetail = courseAuthorDetail;
+    if (coursePrice) searchForAdmin.adminCourses.coursePrice = coursePrice;
+    if (courseValidatiy)
+      searchForAdmin.adminCourses.courseValidatiy = courseValidatiy;
+    if (courseMaterial)
+      searchForAdmin.adminCourses.courseMaterial = courseMaterial;
+    if (courseRequirements)
+      searchForAdmin.adminCourses.courseRequirements = courseRequirements;
+    if (courseCategory)
+      searchForAdmin.adminCourses.courseCategory = courseCategory;
+    if (typeof isCourseActive === "boolean")
+      searchForAdmin.adminCourses.isCourseActive = isCourseActive;
+
+    await searchForAdmin.save();
+  } catch (error) {
+    console.error("Error while Editing course:", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
   res.status(200).json({
     messsage: "Course Edited Successfully",
   });
