@@ -122,7 +122,31 @@ userRouter.get("/userDetails", async (req, res) => {
 });
 
 // fetch users purchased courses
-userRouter.get("/purchasedCourses", async (req, res) => {});
+userRouter.post("/purchasedCourses", async (req, res) => {
+  const { userID } = req.body;
+  try {
+    if (!userID) {
+      return res.status(400).json({
+        message: "User ID is not valid please connect with the operator",
+      });
+    }
+    const searchForUser = await userModel.findOne({ userID });
+    if (!searchForUser) {
+      return res.status(400).json({
+        message: "User ID not valid, Please connect with the operator",
+      });
+    }
+    return res.status(200).json({
+      message: "Fetched Users Courses Successfully",
+      courses: searchForUser.userCourses,
+    });
+  } catch (error) {
+    console.log("Error during fetching user courses", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
 
 // course purchase endpoint
 userRouter.post("/enrollCourse", async (req, res) => {
@@ -163,7 +187,7 @@ userRouter.post("/enrollCourse", async (req, res) => {
       searchForUser,
     });
   } catch (error) {
-    console.log("Error during fetching user courses", error);
+    console.log("Error during Purchasing the course", error);
     res.status(500).json({
       message: "Internal Server Error",
     });
