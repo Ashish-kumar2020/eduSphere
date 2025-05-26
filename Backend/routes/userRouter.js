@@ -1,13 +1,57 @@
 const { Router } = require("express");
 const { userModel, courseModel } = require("../DB");
-const { mongoose } = require("mongoose");
+const { mongoose, Types } = require("mongoose");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const userRouter = Router();
 
 // Signup endpoint
 userRouter.post("/signup", async (req, res) => {
-  res.status(200).json({
-    messsage: "Signup Endpoint",
-  });
+  const { firstName, lastName, email, password, userName } = req.body;
+  try {
+    if (
+      !firstName ||
+      !lastName ||
+      !userName ||
+      !email ||
+      !userName ||
+      !password
+    ) {
+      return res.status(400).json({
+        messsage: "All Fields are Mandatory",
+      });
+    }
+    const searchUser = await userModel.findOne({ email });
+    if (searchUser) {
+      return res.status(400).json({
+        messsage: "User already exists please try to login",
+      });
+    }
+    const hashedPassword = await bcrypt.hash(password, 5);
+    const userID = new Types.ObjectId();
+    const user = await userModel.create({
+      userName,
+      firstName,
+      lastName,
+      email,
+      userID,
+      password: hashedPassword,
+    });
+    return res.status(200).json({
+      messsage: "User Account Created Successfully",
+      user,
+    });
+  } catch (error) {
+    console.log("Error during signup", error);
+    if (error.name === "MongoServerError" && error.code === 11000) {
+      return res.status(409).json({
+        message: "Email already exists",
+      });
+    }
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
 });
 
 // Login Endpoint
