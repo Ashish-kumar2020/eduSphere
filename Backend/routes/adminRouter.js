@@ -281,11 +281,40 @@ adminRouter.put("/course/:id", async (req, res) => {
 });
 
 // fetch selected course
-adminRouter.get("/fetchCurrentCourse/:id", async (req, res) => {
-  const { id } = req.params;
-  res.status(200).json({
-    messsage: "Fetched Current course",
-  });
+adminRouter.post("/fetchCurrentCourse", async (req, res) => {
+  const { courseID, adminID } = req.body;
+  try {
+    if (!courseID || !adminID) {
+      return res.status(400).json({
+        message: "All Fields Are mandatory, Please connect with your operator",
+      });
+    }
+    const searchForAdmin = await adminModel.findOne({ adminID });
+    if (!searchForAdmin) {
+      return res.status(400).json({
+        message: "No Admin Found",
+      });
+    }
+    const searchCourse = new Types.ObjectId(courseID);
+    const findCourse = searchForAdmin.adminCourses.findIndex((t) =>
+      t.courseID.equals(searchCourse)
+    );
+    if (findCourse === -1) {
+      return res.status(400).json({
+        message: "Course with this ID is not present",
+      });
+    }
+    const selectedCourse = searchForAdmin.adminCourses[findCourse];
+    res.status(200).json({
+      messsage: "Fetched Current course",
+      selectedCourse,
+    });
+  } catch (error) {
+    console.error("Error while Fetching course:", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
 });
 module.exports = {
   adminRouter,
