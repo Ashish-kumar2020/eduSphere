@@ -56,9 +56,41 @@ userRouter.post("/signup", async (req, res) => {
 
 // Login Endpoint
 userRouter.post("/signin", async (req, res) => {
-  res.status(200).json({
-    messsage: "Signin Endpoint",
-  });
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({
+      message: "All Fields are mandatory",
+    });
+  }
+  try {
+    const searchUser = await userModel.findOne({ email });
+    if (!searchUser) {
+      return res.status(400).json({
+        messsage: "No User found, Please try to signup",
+      });
+    }
+    const matchPassword = await bcrypt.compare(password, searchUser.password);
+    if (!matchPassword) {
+      return res.status(400).json({
+        messsage: "Wrong Credentials",
+      });
+    }
+    if (matchPassword && searchUser) {
+      const token = jwt.sign({ user: searchUser.email }, process.env.JWT_AUTH, {
+        expiresIn: "1h",
+      });
+      return res.status(200).json({
+        messsage: "User LoggedIn Successfully",
+        searchUser,
+        token,
+      });
+    }
+  } catch (error) {
+    console.log("Error during signin", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
 });
 
 // user profile
