@@ -94,11 +94,31 @@ userRouter.post("/signin", async (req, res) => {
 });
 
 // user profile
-userRouter.get("/userDetails/:id", async (req, res) => {
-  const { id } = req.params;
-  res.status(200).json({
-    messsage: "Get Loged in user details",
-  });
+userRouter.get("/userDetails", async (req, res) => {
+  const { userID } = req.query;
+  try {
+    if (!userID) {
+      return res.status(400).json({
+        message: "All Fields are mandatory",
+      });
+    }
+    const checkForUserDetails = await userModel.findOne({ userID });
+    if (!checkForUserDetails) {
+      return res.status(400).json({
+        message:
+          "No User Found with the given ID, Please connect with the Operator",
+      });
+    }
+    res.status(200).json({
+      messsage: "User Details Fetched Successfully",
+      checkForUserDetails,
+    });
+  } catch (error) {
+    console.log("Error during fetching user details", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
 });
 
 // fetch users purchased courses
