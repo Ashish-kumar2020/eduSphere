@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { userModel, courseModel } = require("../DB");
+const { userModel, courseModel, adminModel } = require("../DB");
 const { mongoose, Types } = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -122,18 +122,52 @@ userRouter.get("/userDetails", async (req, res) => {
 });
 
 // fetch users purchased courses
-userRouter.get("/purchasedCourses/:id", async (req, res) => {
-  const { id } = req.params;
-  res.status(200).json({
-    messsage: "Get Logged in user purchased courses",
-  });
-});
+userRouter.get("/purchasedCourses", async (req, res) => {});
 
 // course purchase endpoint
 userRouter.post("/enrollCourse", async (req, res) => {
-  res.status(200).json({
-    messsage: "Enroll to any specific course",
-  });
+  const { userID, courseID, adminID } = req.body;
+  try {
+    if (!userID || !courseID || !adminID) {
+      return res.status(400).json({
+        message: "All Fileds are mandatory",
+      });
+    }
+    const searchForUser = await userModel.findOne({ userID });
+    if (!searchForUser) {
+      return res.status(400).json({
+        message: "No User Found",
+      });
+    }
+
+    const searchForAdmin = await adminModel.findOne({ adminID });
+    if (!searchForAdmin) {
+      return res.status(400).json({
+        message: "Admin Id not valid, Please connect with the operator",
+      });
+    }
+    const searchForCourse = new Types.ObjectId(courseID);
+    const findCourse = searchForAdmin.adminCourses.findIndex((t) =>
+      t.courseID.equals(searchForCourse)
+    );
+    if (findCourse === -1) {
+      return res.status(400).json({
+        message: "Course with this ID is not present",
+      });
+    }
+    const purchasedCourses = searchForAdmin.adminCourses[findCourse];
+    searchForUser.userCourses.push(purchasedCourses);
+    await searchForUser.save();
+    return res.status(200).json({
+      message: "Course Purchased Successfully",
+      searchForUser,
+    });
+  } catch (error) {
+    console.log("Error during fetching user courses", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
 });
 
 // open any selected contes - when user click on any of the purchased courses this will return the detials of that course
