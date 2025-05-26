@@ -195,10 +195,35 @@ userRouter.post("/enrollCourse", async (req, res) => {
 });
 
 // open any selected contes - when user click on any of the purchased courses this will return the detials of that course
-userRouter.get("/selectedCourse/:id", async (req, res) => {
-  res.status(200).json({
-    messsage: "Return selected course",
-  });
+userRouter.post("/selectedCourse", async (req, res) => {
+  const { userID, courseID } = req.body;
+  try {
+    if (!userID || !courseID) {
+      return res.status(400).json({
+        message: "Enter a valid courseID or UserID",
+      });
+    }
+    const searchForUser = await userModel.findOne({ userID });
+    const searchForCourse = new Types.ObjectId(courseID);
+    const findCourse = searchForUser.userCourses.findIndex((t) =>
+      t.userCourses.findIndex(searchForCourse)
+    );
+    if (findCourse === -1) {
+      return res.status(400).json({
+        message: "Course Not found",
+      });
+    }
+    const searchedCourse = searchForUser.userCourses[findCourse];
+    return res.status(200).json({
+      message: "Selected Course Fetched Successfully",
+      searchedCourse,
+    });
+  } catch (error) {
+    console.log("Error during Purchasing the course", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
 });
 
 module.exports = {
