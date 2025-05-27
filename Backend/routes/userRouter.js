@@ -4,19 +4,26 @@ const { mongoose, Types } = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userRouter = Router();
-
+const { z } = require("zod");
 // Signup endpoint
 userRouter.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password, userName } = req.body;
+  const requiredBody = z.object({
+    firstName: z.string().min(4).max(20),
+    lastName: z.string().min(4).max(20),
+    userName: z.string().min(4).max(20),
+    email: z.string().min(4).max(30).email(),
+    password: z.string().min(6).max(10),
+  });
+  const { success, data, error } = requiredBody.safeParse(req.body);
+  if (!success) {
+    return res.status(400).json({
+      message: "Incorrect Data",
+      error: error,
+    });
+  }
   try {
-    if (
-      !firstName ||
-      !lastName ||
-      !userName ||
-      !email ||
-      !userName ||
-      !password
-    ) {
+    if (!firstName || !lastName || !userName || !email || !password) {
       return res.status(400).json({
         messsage: "All Fields are Mandatory",
       });
