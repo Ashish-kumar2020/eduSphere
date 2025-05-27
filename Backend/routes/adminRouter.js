@@ -70,6 +70,17 @@ adminRouter.post("/signup", async (req, res) => {
 // Login Endpoint
 adminRouter.post("/signin", async (req, res) => {
   const { email, password } = req.body;
+  const requiredBody = z.object({
+    email: z.string().min(4).max(20).email(),
+    password: z.string().min(6).max(10),
+  });
+  const { success, data, error } = requiredBody.safeParse(req.body);
+  if (!success) {
+    return res.status(400).json({
+      message: "Incorrect Data",
+      error: error,
+    });
+  }
   if (!email || !password) {
     return res.status(400).json({
       message: "All Fields are mandatory",
