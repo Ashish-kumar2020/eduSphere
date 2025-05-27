@@ -4,6 +4,7 @@ const { mongoose, Types } = require("mongoose");
 const adminRouter = Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
 adminRouter.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password, userName } = req.body;
   try {
@@ -218,8 +219,24 @@ adminRouter.post("/createCourse", async (req, res) => {
     };
 
     searchForAdmin.adminCourses.push(newCourse);
-    await searchForAdmin.save();
 
+    await searchForAdmin.save();
+    const commonCourse = new courseModel({
+      title,
+      description,
+      courseContent,
+      courseLearning,
+      courseAuthorDetail,
+      coursePrice,
+      courseValidatiy,
+      courseMaterial,
+      courseRequirements,
+      courseCategory,
+      isCourseActive,
+      courseID,
+    });
+    // Save courses in Course Schema
+    await commonCourse.save();
     res.status(200).json({
       message: "Course Created Successfully",
       courseID,

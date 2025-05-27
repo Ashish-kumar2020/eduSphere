@@ -3,11 +3,13 @@ require("dotenv").config();
 const { mongoose } = require("mongoose");
 const { adminRouter } = require("./routes/adminRouter");
 const { userRouter } = require("./routes/userRouter");
+const { commonRouter } = require("./routes/commonRouter");
 const app = express();
 const PORT_NUMBER = process.env.PORT_NUMBER;
 app.use(express.json());
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/common", commonRouter);
 mongoose.connection.on("connected", () => {
   console.log("✅ Mongoose connected successfully");
 });
