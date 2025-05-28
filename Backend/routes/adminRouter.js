@@ -5,6 +5,8 @@ const adminRouter = Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { z } = require("zod");
+const authentication = require("../middleware/authMiddleware");
+
 adminRouter.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password, userName } = req.body;
   const requiredBody = z.object({
@@ -118,7 +120,7 @@ adminRouter.post("/signin", async (req, res) => {
 });
 
 // user profile
-adminRouter.get("/fetchAdminDetails", async (req, res) => {
+adminRouter.get("/fetchAdminDetails", authentication, async (req, res) => {
   const { adminID } = req.query;
   try {
     if (!adminID) {
@@ -146,7 +148,7 @@ adminRouter.get("/fetchAdminDetails", async (req, res) => {
 });
 
 // fetch all Admin Courses
-adminRouter.get("/fetchAllAdminCourses", async (req, res) => {
+adminRouter.get("/fetchAllAdminCourses", authentication, async (req, res) => {
   const { adminID } = req.query;
   try {
     if (!adminID) {
@@ -176,7 +178,7 @@ adminRouter.get("/fetchAllAdminCourses", async (req, res) => {
 });
 
 // create a course
-adminRouter.post("/createCourse", async (req, res) => {
+adminRouter.post("/createCourse", authentication, async (req, res) => {
   const {
     title,
     description,
@@ -275,7 +277,7 @@ adminRouter.post("/createCourse", async (req, res) => {
 });
 
 // delete a course
-adminRouter.delete("/deleteCourse", async (req, res) => {
+adminRouter.delete("/deleteCourse", authentication, async (req, res) => {
   const { courseID, adminID } = req.body;
 
   try {
@@ -315,7 +317,7 @@ adminRouter.delete("/deleteCourse", async (req, res) => {
 });
 
 // Edit a course
-adminRouter.put("/editCourse", async (req, res) => {
+adminRouter.put("/editCourse", authentication, async (req, res) => {
   const {
     adminID,
     courseID,
@@ -376,7 +378,7 @@ adminRouter.put("/editCourse", async (req, res) => {
 });
 
 // fetch selected course
-adminRouter.post("/fetchCurrentCourse", async (req, res) => {
+adminRouter.post("/fetchCurrentCourse", authentication, async (req, res) => {
   const { courseID, adminID } = req.body;
   try {
     if (!courseID || !adminID) {

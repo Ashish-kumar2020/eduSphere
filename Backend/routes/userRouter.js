@@ -112,7 +112,7 @@ userRouter.post("/signin", async (req, res) => {
 });
 
 // user profile
-userRouter.get("/userDetails", async (req, res) => {
+userRouter.get("/userDetails", authentication, async (req, res) => {
   const { userID } = req.query;
   try {
     if (!userID) {
@@ -140,7 +140,7 @@ userRouter.get("/userDetails", async (req, res) => {
 });
 
 // fetch users purchased courses
-userRouter.post("/purchasedCourses", async (req, res) => {
+userRouter.post("/purchasedCourses", authentication, async (req, res) => {
   const { userID } = req.body;
   try {
     if (!userID) {
@@ -167,7 +167,7 @@ userRouter.post("/purchasedCourses", async (req, res) => {
 });
 
 // course purchase endpoint
-userRouter.post("/enrollCourse", async (req, res) => {
+userRouter.post("/enrollCourse", authentication, async (req, res) => {
   const { userID, courseID, adminID } = req.body;
   try {
     if (!userID || !courseID || !adminID) {
@@ -213,7 +213,7 @@ userRouter.post("/enrollCourse", async (req, res) => {
 });
 
 // open any selected contes - when user click on any of the purchased courses this will return the detials of that course
-userRouter.post("/selectedCourse", async (req, res) => {
+userRouter.post("/selectedCourse", authentication, async (req, res) => {
   const { userID, courseID } = req.body;
   try {
     if (!userID || !courseID) {
