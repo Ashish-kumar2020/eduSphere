@@ -4,12 +4,14 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import Signin from "./components/Signin";
 import Signup from "./components/Signup";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
     <>
       {/* <Signin /> */}
-      <Signup />
+      {/* <Signup /> */}
+      <HomePage />
     </>
   );
 }
