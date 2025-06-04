@@ -72,18 +72,19 @@ function SignUp() {
                 >
                   First name
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 relative">
                   <input
                     id="firstName"
                     name="firstName"
                     type="text"
                     required
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                    className="appearance-none block w-full px-3 pl-10 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                     value={formData.firstName}
                     onChange={(e) =>
                       setFormData({ ...formData, firstName: e.target.value })
                     }
                   />
+                  <User className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
                 </div>
               </div>
 
@@ -94,18 +95,19 @@ function SignUp() {
                 >
                   Last name
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 relative">
                   <input
                     id="lastName"
                     name="lastName"
                     type="text"
                     required
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                    className="appearance-none block w-full px-3 pl-10 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                     value={formData.lastName}
                     onChange={(e) =>
                       setFormData({ ...formData, lastName: e.target.value })
                     }
                   />
+                  <User className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
                 </div>
               </div>
             </div>
