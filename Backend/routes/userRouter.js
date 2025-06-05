@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userRouter = Router();
 const { z } = require("zod");
+const authentication = require("../middleware/authMiddleware");
 // Signup endpoint
 userRouter.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password, userName } = req.body;
