@@ -25,6 +25,11 @@ const courseSchema = new Schema({
   courseRequirements: { type: [String], required: true }, // prerequisites
   courseCategory: { type: String, required: true }, // webdev, etc.
   isCourseActive: { type: Boolean, default: true },
+  courseLevel: String,
+  courseRating: Number,
+  studentEnrolled: Number,
+  courseImage: String,
+  courseContentDuration: Number,
 });
 
 const userSchema = new Schema({

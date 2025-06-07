@@ -191,7 +191,12 @@ adminRouter.post("/createCourse", authentication, async (req, res) => {
     courseRequirements,
     courseCategory,
     isCourseActive,
+    courseLevel,
+    courseRating,
+    studentEnrolled,
+    courseImage,
     adminID,
+    courseContentDuration,
   } = req.body;
 
   try {
@@ -213,7 +218,12 @@ adminRouter.post("/createCourse", authentication, async (req, res) => {
       courseRequirements.length === 0 ||
       !courseCategory ||
       typeof isCourseActive !== "boolean" ||
-      !adminID
+      !adminID ||
+      !courseLevel ||
+      courseRating == null ||
+      studentEnrolled == null ||
+      !courseImage ||
+      courseContentDuration == null
     ) {
       return res.status(400).json({
         message: "All Fields Are Mandatory and should be in correct format",
@@ -243,6 +253,11 @@ adminRouter.post("/createCourse", authentication, async (req, res) => {
       courseCategory,
       isCourseActive,
       courseID,
+      courseLevel,
+      courseRating,
+      studentEnrolled,
+      courseImage,
+      courseContentDuration,
     };
 
     searchForAdmin.adminCourses.push(newCourse);
@@ -261,6 +276,11 @@ adminRouter.post("/createCourse", authentication, async (req, res) => {
       courseCategory,
       isCourseActive,
       courseID,
+      courseLevel,
+      courseRating,
+      studentEnrolled,
+      courseImage,
+      courseContentDuration,
     });
     // Save courses in Course Schema
     await commonCourse.save();
