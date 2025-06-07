@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, Search, ShoppingCart, User } from "lucide-react";
 import Logo from "./Logo";
+import { Link } from "react-router-dom";
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,7 +28,9 @@ function Header() {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
-          <Logo />
+          <Link to="/">
+            <Logo />
+          </Link>
 
           <nav className="hidden md:flex items-center space-x-8">
             <a
@@ -48,12 +51,12 @@ function Header() {
             >
               For Instructors
             </a>
-            <a
-              href="#"
+            <Link
+              to="/about"
               className="text-primary hover:text-gray-600 font-medium transition-colors"
             >
               About
-            </a>
+            </Link>
           </nav>
 
           <div className="hidden md:flex items-center space-x-6">
