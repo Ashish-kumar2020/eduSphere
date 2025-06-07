@@ -30,7 +30,7 @@ function AdminSignIn() {
         <p className="mt-2 text-center text-sm text-gray-600">
           Or{" "}
           <Link
-            to="/signup"
+            to="/adminSignup"
             className="font-medium text-primary hover:text-gray-800"
           >
             create a new account

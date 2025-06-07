@@ -30,7 +30,7 @@ function AdminSignUp() {
         <p className="mt-2 text-center text-sm text-gray-600">
           Already have an account?{" "}
           <Link
-            to="/signin"
+            to="/adminsignin"
             className="font-medium text-primary hover:text-gray-800"
           >
             Sign in
@@ -46,7 +46,7 @@ function AdminSignUp() {
                 htmlFor="username"
                 className="block text-sm font-medium text-gray-700"
               >
-                Username
+                Admin Name
               </label>
               <div className="mt-1 relative">
                 <input

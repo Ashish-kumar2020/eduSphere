@@ -10,12 +10,26 @@ import { RouterProvider } from "react-router";
 import UserSignUp from "./components/UserSignup";
 import AdminSignUp from "./components/AdminSignup";
 import About from "./components/About";
+import MainLayout from "./components/MainLayout";
+import { Home } from "lucide-react";
+import UserSignIn from "./components/UserSignin";
+import AdminSignIn from "./components/AdminSignIn";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <HomePage />,
+      element: <MainLayout />,
+      children: [
+        {
+          index: true,
+          element: <HomePage />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+      ],
     },
     {
       path: "/usersignup",
@@ -26,8 +40,12 @@ function App() {
       element: <AdminSignUp />,
     },
     {
-      path: "/about",
-      element: <About />,
+      path: "/signin",
+      element: <UserSignIn />,
+    },
+    {
+      path: "/adminsignin",
+      element: <AdminSignIn />,
     },
   ]);
   return <RouterProvider router={router} />;
