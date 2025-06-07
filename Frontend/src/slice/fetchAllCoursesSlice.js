@@ -14,7 +14,7 @@ const fetchCoursesSlice = createSlice({
   initialState: {
     isLoading: false,
     isError: false,
-    data: null,
+    data: { fetchAllCourses: [] },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCourses.pending, (state, action) => {

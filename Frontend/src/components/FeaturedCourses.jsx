@@ -1,18 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CourseCard from "./CourseCard";
 import { coursesData } from "../data/coursesData";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCourses } from "../slice/fetchAllCoursesSlice";
 
 const categories = ["All", "Development", "Business", "Design", "Marketing"];
 
 const FeaturedCourses = () => {
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const filteredCourses =
-    activeCategory === "All"
-      ? coursesData.slice(0, 6)
-      : coursesData
-          .filter((course) => course.category === activeCategory)
-          .slice(0, 6);
+  const dispatch = useDispatch();
+  const { data, isLoading, isError } = useSelector(
+    (state) => state.fetchAllCourses || {}
+  );
+  useEffect(() => {
+    dispatch(fetchCourses());
+  }, [dispatch]);
+
+  const popularCourses = data?.fetchAllCourses.slice(0, 6);
 
   return (
     <section className="py-16 bg-white" id="courses">
@@ -44,8 +49,8 @@ const FeaturedCourses = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
+          {popularCourses?.map((course) => (
+            <CourseCard key={course._id} course={course} />
           ))}
         </div>
 
