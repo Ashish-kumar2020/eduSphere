@@ -33,24 +33,24 @@ function Header() {
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <a
-              href="#"
+            <Link
+              to="/courses"
               className="text-primary hover:text-gray-600 font-medium transition-colors"
             >
               Courses
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/categories"
               className="text-primary hover:text-gray-600 font-medium transition-colors"
             >
               Categories
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/forInstructor"
               className="text-primary hover:text-gray-600 font-medium transition-colors"
             >
               For Instructors
-            </a>
+            </Link>
             <Link
               to="/about"
               className="text-primary hover:text-gray-600 font-medium transition-colors"

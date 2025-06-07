@@ -14,6 +14,9 @@ import MainLayout from "./components/MainLayout";
 import { Home } from "lucide-react";
 import UserSignIn from "./components/UserSignin";
 import AdminSignIn from "./components/AdminSignIn";
+import ForInstructors from "./components/ForInstructor";
+import Categories from "./components/Categories";
+import FeaturedCourses from "./components/FeaturedCourses";
 
 function App() {
   const router = createBrowserRouter([
@@ -28,6 +31,18 @@ function App() {
         {
           path: "/about",
           element: <About />,
+        },
+        {
+          path: "/forInstructor",
+          element: <ForInstructors />,
+        },
+        {
+          path: "/categories",
+          element: <Categories />,
+        },
+        {
+          path: "/courses",
+          element: <FeaturedCourses />,
         },
       ],
     },
