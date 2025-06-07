@@ -5,7 +5,6 @@ export const fetchCourses = createAsyncThunk("fetchAllCourses", async () => {
   const response = await axios.get(
     import.meta.env.VITE_API_URL_GET_ALL_COURSES_ROUTE
   );
-  console.log(response.data);
   return response.data;
 });
 

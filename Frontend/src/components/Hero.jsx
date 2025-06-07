@@ -1,7 +1,9 @@
 import React from "react";
 import { UserRound, ShieldCheck } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
       {/* Background pattern */}
@@ -22,11 +24,17 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
-              <button className="flex items-center justify-center gap-2 bg-teal-700 hover:bg-teal-800 text-white py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 font-medium">
+              <button
+                onClick={() => navigate("/usersignup")}
+                className="flex items-center justify-center gap-2 bg-teal-700 hover:bg-teal-800 text-white py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 font-medium"
+              >
                 <UserRound size={18} />
                 <span>User Sign Up</span>
               </button>
-              <button className="flex items-center justify-center gap-2 bg-white border border-gray-300 hover:border-teal-700 text-gray-800 hover:text-teal-700 py-3 px-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 font-medium">
+              <button
+                onClick={() => navigate("/adminSignup")}
+                className="flex items-center justify-center gap-2 bg-white border border-gray-300 hover:border-teal-700 text-gray-800 hover:text-teal-700 py-3 px-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 font-medium"
+              >
                 <ShieldCheck size={18} />
                 <span>Admin Sign Up</span>
               </button>

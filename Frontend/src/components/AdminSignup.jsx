@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Lock, User, ArrowLeft } from "lucide-react";
-import Logo from "../components/Logo";
+import Logo from "./Logo";
 
-function SignUp() {
+function AdminSignUp() {
   const [formData, setFormData] = useState({
     username: "",
     firstName: "",
@@ -183,4 +183,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default AdminSignUp;

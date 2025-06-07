@@ -1,9 +1,9 @@
 import React, { useState, FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Lock, ArrowLeft } from "lucide-react";
-import Logo from "../components/Logo";
+import Logo from "./Logo";
 
-function SignIn() {
+function UserSignIn() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -134,4 +134,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default UserSignIn;
