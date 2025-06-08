@@ -5,7 +5,7 @@ const CreateCourse = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState("");
-  const [category, setCategory] = useState("");
+  const [courseLevel, setCourseLevel] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,7 +47,7 @@ const CreateCourse = () => {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
-                  className="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-teal-600 focus:border-teal-600"
+                  className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   placeholder="e.g. Introduction to Python"
                 />
               </div>
@@ -61,42 +61,138 @@ const CreateCourse = () => {
                   onChange={(e) => setDescription(e.target.value)}
                   rows="4"
                   required
-                  className="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-teal-600 focus:border-teal-600"
+                  className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   placeholder="Brief description about the course"
                 />
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Thumbnail URL
-                </label>
-                <input
-                  type="text"
-                  value={thumbnail}
-                  onChange={(e) => setThumbnail(e.target.value)}
-                  className="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-teal-600 focus:border-teal-600"
-                  placeholder="https://..."
-                />
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="w-full md:w-1/2">
+                  <label
+                    htmlFor="lastName"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Course Price
+                  </label>
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="number"
+                    required
+                    className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  />
+                </div>
+                <div className="w-full md:w-1/2">
+                  <label
+                    htmlFor="lastName"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Course Validatiy
+                  </label>
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    required
+                    className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="w-full md:w-1/2">
+                  <label
+                    htmlFor="lastName"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Course Content Duration
+                  </label>
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="number"
+                    required
+                    className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  />
+                </div>
+                <div className="w-full md:w-1/2">
+                  <label
+                    htmlFor="lastName"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Course Rating
+                  </label>
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="number"
+                    required
+                    className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="w-full md:w-1/2">
+                  <label
+                    htmlFor="lastName"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Students Enrolled
+                  </label>
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="number"
+                    required
+                    className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  />
+                </div>
+                <div className="w-full md:w-1/2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Course Image
+                  </label>
+                  <input
+                    type="text"
+                    value={thumbnail}
+                    onChange={(e) => setThumbnail(e.target.value)}
+                    className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                    placeholder="https://..."
+                  />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Category
-                </label>
-                <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  required
-                  className="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-teal-600 focus:border-teal-600"
-                >
-                  <option value="">Select Category</option>
-                  <option value="Development">Development</option>
-                  <option value="Business">Business</option>
-                  <option value="Design">Design</option>
-                  <option value="Marketing">Marketing</option>
-                </select>
-              </div>
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="w-full md:w-1/2">
+                  <label
+                    htmlFor="lastName"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Course Category
+                  </label>
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    required
+                    className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  />
+                </div>
+                <div className="w-full md:w-1/2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Course Level
+                  </label>
 
+                  <select
+                    value={courseLevel}
+                    onChange={(e) => setCourseLevel(e.target.value)}
+                    required
+                    className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  >
+                    <option value="">Select Level</option>
+                    <option value="Development">Intermediate</option>
+                    <option value="Business">Beginner</option>
+                    <option value="Design">Advanced</option>
+                  </select>
+                </div>
+              </div>
               <button
                 type="submit"
                 className="w-full bg-teal-700 text-white py-3 rounded-lg font-medium hover:bg-teal-800 transition"
