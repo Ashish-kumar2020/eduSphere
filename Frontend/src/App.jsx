@@ -17,6 +17,7 @@ import AdminSignIn from "./components/AdminSignIn";
 import ForInstructors from "./components/ForInstructor";
 import Categories from "./components/Categories";
 import FeaturedCourses from "./components/FeaturedCourses";
+import UsersHomePage from "./components/UsersHomePage";
 
 function App() {
   const router = createBrowserRouter([
@@ -61,6 +62,10 @@ function App() {
     {
       path: "/adminsignin",
       element: <AdminSignIn />,
+    },
+    {
+      path: "/userHomePage",
+      element: <UsersHomePage />,
     },
   ]);
   return <RouterProvider router={router} />;

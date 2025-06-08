@@ -103,6 +103,7 @@ userRouter.post("/signin", async (req, res) => {
         messsage: "User LoggedIn Successfully",
         searchUser,
         token,
+        status: 200,
       });
     }
   } catch (error) {

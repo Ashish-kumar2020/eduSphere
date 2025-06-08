@@ -1,21 +1,41 @@
 import React, { useState, FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock, ArrowLeft } from "lucide-react";
 import Logo from "./Logo";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
 function UserSignIn() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const navigate = useNavigate();
+  const signInMutation = useMutation({
+    mutationFn: (formData) => {
+      return axios.post(import.meta.env.VITE_API_URL_USER_SIGNIN, formData);
+    },
+    onSuccess: (res) => {
+      if (res.data.status === 200) {
+        setFormData({
+          email: "",
+          password: "",
+        });
+      }
+      navigate("/userHomePage");
+    },
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // ...
+    signInMutation.mutate(formData);
+    console.log(formData);
   };
 
   return (
