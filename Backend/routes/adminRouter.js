@@ -206,9 +206,9 @@ adminRouter.post("/createCourse", authentication, async (req, res) => {
     if (
       !title ||
       !description ||
-      !Array.isArray(courseContent) ||
+      !courseContent ||
       courseContent.length === 0 ||
-      !Array.isArray(courseLearning) ||
+      !courseLearning ||
       courseLearning.length === 0 ||
       !courseAuthorDetail ||
       typeof courseAuthorDetail !== "object" ||
@@ -216,7 +216,7 @@ adminRouter.post("/createCourse", authentication, async (req, res) => {
       !courseValidatiy ||
       !Array.isArray(courseMaterial) ||
       courseMaterial.length === 0 ||
-      !Array.isArray(courseRequirements) ||
+      !courseRequirements ||
       courseRequirements.length === 0 ||
       !courseCategory ||
       typeof isCourseActive !== "boolean" ||
