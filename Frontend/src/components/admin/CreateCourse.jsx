@@ -2,21 +2,23 @@
 import React, { useState } from "react";
 
 const CreateCourse = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [thumbnail, setThumbnail] = useState("");
-  const [courseLevel, setCourseLevel] = useState("");
-  const [courseMaterial, setCourseMaterial] = useState([
-    {
-      type: "video",
-      title: "",
-      url: "",
+  const [courseDetails, setCourseDetails] = useState({
+    title: "",
+    description: "",
+    coursePrice: null,
+    courseValidatiy: "",
+    courseContentDuration: null,
+    courseRating: null,
+    studentEnrolled: null,
+    courseCategory: "",
+    courseRequirements: "",
+    courseAuthorDetail: {
+      name: "",
+      experience: "",
+      bio: "",
     },
-  ]);
-  const [courseAuthorDetails, setCourseAuthorDetails] = useState({
-    name: "",
-    experience: "",
-    bio: "",
+    courseLearning: "",
+    courseContent: "",
   });
 
   const handleMaterialChange = (index, field, value) => {
@@ -72,8 +74,13 @@ const CreateCourse = () => {
                 </label>
                 <input
                   type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  value={courseDetails.title}
+                  onChange={(e) =>
+                    setCourseDetails({
+                      ...courseDetails,
+                      title: e.target.value,
+                    })
+                  }
                   required
                   className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   placeholder="e.g. Introduction to Python"
@@ -86,8 +93,13 @@ const CreateCourse = () => {
                   Description
                 </label>
                 <textarea
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  value={courseDetails.description}
+                  onChange={(e) =>
+                    setCourseDetails({
+                      ...courseDetails,
+                      description: e.target.value,
+                    })
+                  }
                   rows="4"
                   required
                   className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
@@ -107,7 +119,14 @@ const CreateCourse = () => {
                     id="lastName"
                     name="lastName"
                     type="number"
+                    value={courseDetails.coursePrice}
                     required
+                    onChange={(e) =>
+                      setCourseDetails({
+                        ...courseDetails,
+                        coursePrice: e.target.value,
+                      })
+                    }
                     placeholder="Enter Course Price"
                     className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   />
@@ -146,6 +165,13 @@ const CreateCourse = () => {
                     name="lastName"
                     type="number"
                     required
+                    value={courseDetails.courseContentDuration}
+                    onChange={(e) =>
+                      setCourseDetails({
+                        ...courseDetails,
+                        courseContentDuration: e.target.value,
+                      })
+                    }
                     placeholder="Enter Course Duration"
                     className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   />
@@ -183,6 +209,13 @@ const CreateCourse = () => {
                     id="lastName"
                     name="lastName"
                     type="number"
+                    value={courseDetails.studentEnrolled}
+                    onChange={(e) =>
+                      setCourseDetails({
+                        ...courseDetails,
+                        studentEnrolled: e.target.value,
+                      })
+                    }
                     required
                     placeholder="Enter Number of Students Enrolled"
                     className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
@@ -216,6 +249,13 @@ const CreateCourse = () => {
                     id="lastName"
                     name="lastName"
                     type="text"
+                    value={courseDetails.courseCategory}
+                    onChange={(e) =>
+                      setCourseDetails({
+                        ...courseDetails,
+                        courseCategory: e.target.value,
+                      })
+                    }
                     required
                     placeholder="Select Course Category"
                     className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
@@ -249,8 +289,13 @@ const CreateCourse = () => {
                 </label>
                 <input
                   type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  value={courseDetails.courseRequirements}
+                  onChange={(e) =>
+                    setCourseDetails({
+                      ...courseDetails,
+                      courseRequirements: e.target.value,
+                    })
+                  }
                   required
                   className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   placeholder="Prerequisites for this courses. Add Requirements by comma seperated"
@@ -330,16 +375,46 @@ const CreateCourse = () => {
                   <input
                     type="text"
                     placeholder="Author Name"
+                    value={courseDetails.courseAuthorDetail.name}
+                    onChange={(e) =>
+                      setCourseDetails({
+                        ...courseDetails,
+                        courseAuthorDetail: {
+                          ...courseDetails.courseAuthorDetail,
+                          name: e.target.value,
+                        },
+                      })
+                    }
                     className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   />
                   <input
                     type="text"
                     placeholder="Author experience"
+                    value={courseDetails.courseAuthorDetail.experience}
+                    onChange={(e) =>
+                      setCourseDetails({
+                        ...courseDetails,
+                        courseAuthorDetail: {
+                          ...courseDetails.courseAuthorDetail,
+                          experience: e.target.value,
+                        },
+                      })
+                    }
                     className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   />
                   <input
                     type="text"
                     placeholder="Author bio"
+                    value={courseDetails.courseAuthorDetail.bio}
+                    onChange={(e) =>
+                      setCourseDetails({
+                        ...courseDetails,
+                        courseAuthorDetail: {
+                          ...courseDetails.courseAuthorDetail,
+                          bio: e.target.value,
+                        },
+                      })
+                    }
                     className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   />
                 </div>
@@ -357,6 +432,13 @@ const CreateCourse = () => {
                   <textarea
                     rows="4"
                     required
+                    value={courseDetails.courseLearning}
+                    onChange={(e) =>
+                      setCourseDetails({
+                        ...courseDetails,
+                        courseLearning: e.target.value,
+                      })
+                    }
                     className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                     placeholder="What will student learn from this course"
                   />
@@ -375,6 +457,13 @@ const CreateCourse = () => {
                   <textarea
                     rows="4"
                     required
+                    value={courseDetails.courseContent}
+                    onChange={(e) =>
+                      setCourseDetails({
+                        ...courseDetails,
+                        courseContent: e.target.value,
+                      })
+                    }
                     className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                     placeholder="Enter the content of the course"
                   />
