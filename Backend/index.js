@@ -4,9 +4,17 @@ const { mongoose } = require("mongoose");
 const { adminRouter } = require("./routes/adminRouter");
 const { userRouter } = require("./routes/userRouter");
 const { commonRouter } = require("./routes/commonRouter");
+const cors = require("cors");
 const app = express();
 const PORT_NUMBER = process.env.PORT_NUMBER;
 app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Allow this specific origin
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+  })
+);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/common", commonRouter);

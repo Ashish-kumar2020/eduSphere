@@ -48,6 +48,7 @@ userRouter.post("/signup", async (req, res) => {
     return res.status(200).json({
       messsage: "User Account Created Successfully",
       user,
+      status: 200,
     });
   } catch (error) {
     console.log("Error during signup", error);
