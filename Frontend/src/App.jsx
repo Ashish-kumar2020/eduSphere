@@ -18,6 +18,7 @@ import ForInstructors from "./components/ForInstructor";
 import Categories from "./components/Categories";
 import FeaturedCourses from "./components/FeaturedCourses";
 import UsersHomePage from "./components/UsersHomePage";
+import AdminHomePage from "./components/AdminHomePage";
 
 function App() {
   const router = createBrowserRouter([
@@ -66,6 +67,10 @@ function App() {
     {
       path: "/userHomePage",
       element: <UsersHomePage />,
+    },
+    {
+      path: "/adminHomepage",
+      element: <AdminHomePage />,
     },
   ]);
   return <RouterProvider router={router} />;
