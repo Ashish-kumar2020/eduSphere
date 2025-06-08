@@ -1,20 +1,40 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock, User, ArrowLeft } from "lucide-react";
 import Logo from "./Logo";
-
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 function AdminSignUp() {
   const [formData, setFormData] = useState({
-    username: "",
+    userName: "",
     firstName: "",
     lastName: "",
     email: "",
     password: "",
   });
 
+  const navigate = useNavigate();
+  const adminSignUpMutate = useMutation({
+    mutationFn: (formData) => {
+      return axios.post(import.meta.env.VITE_API_URL_ADMIN_SIGNUP, formData);
+    },
+    onSuccess: (res) => {
+      if (res.data.status === 200) {
+        setFormData({
+          userName: "",
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+        });
+      }
+      navigate("/adminsignin");
+    },
+  });
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle sign up logic here
+    adminSignUpMutate.mutate(formData);
     console.log("Sign up:", formData);
   };
 
@@ -55,9 +75,9 @@ function AdminSignUp() {
                   type="text"
                   required
                   className="appearance-none block w-full px-3 py-2 pl-10 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                  value={formData.username}
+                  value={formData.userName}
                   onChange={(e) =>
-                    setFormData({ ...formData, username: e.target.value })
+                    setFormData({ ...formData, userName: e.target.value })
                   }
                 />
                 <User className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
