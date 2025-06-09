@@ -5,11 +5,11 @@ const CreateCourse = () => {
   const [courseDetails, setCourseDetails] = useState({
     title: "",
     description: "",
-    coursePrice: null,
+    coursePrice: "",
     courseValidatiy: "",
-    courseContentDuration: null,
-    courseRating: null,
-    studentEnrolled: null,
+    courseContentDuration: "",
+    courseRating: "",
+    studentEnrolled: "",
     courseCategory: "",
     courseRequirements: "",
     courseAuthorDetail: {
@@ -19,42 +19,41 @@ const CreateCourse = () => {
     },
     courseLearning: "",
     courseContent: "",
+    courseLevel: "",
+    courseImage: "",
+    courseMaterial: [{ type: "video", title: "", url: "" }],
   });
 
   const handleMaterialChange = (index, field, value) => {
-    const updated = [...courseMaterial];
+    const updated = [...courseDetails.courseMaterial];
     updated[index][field] = value;
-    setCourseMaterial(updated);
+    setCourseDetails({
+      ...courseDetails,
+      courseMaterial: updated,
+    });
   };
 
   const addMaterial = () => {
-    setCourseMaterial([
-      ...courseMaterial,
-      { type: "video", title: "", url: "" },
-    ]);
+    setCourseDetails({
+      ...courseDetails,
+      courseMaterial: [
+        ...courseDetails.courseMaterial,
+        { type: "video", title: "", url: "" },
+      ],
+    });
   };
 
   const removeMaterial = (index) => {
-    const updated = courseMaterial.filter((_, i) => i !== index);
-    setCourseMaterial(updated);
+    const updated = courseDetails.courseMaterial.filter((_, i) => i !== index);
+    setCourseDetails({
+      ...courseDetails,
+      courseMaterial: updated,
+    });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const newCourse = {
-      title,
-      description,
-      thumbnail,
-      category,
-    };
-
-    console.log("Course Created:", newCourse);
-
-    // Reset form
-    setTitle("");
-    setDescription("");
-    setThumbnail("");
-    setCategory("");
+    console.log(courseDetails);
     alert("Course created successfully!");
   };
 
@@ -144,6 +143,13 @@ const CreateCourse = () => {
                     id="lastName"
                     name="lastName"
                     type="text"
+                    value={courseDetails.courseValidatiy}
+                    onChange={(e) =>
+                      setCourseDetails({
+                        ...courseDetails,
+                        courseValidatiy: e.target.value,
+                      })
+                    }
                     required
                     placeholder="Enter Course Validatiy"
                     className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
@@ -189,6 +195,13 @@ const CreateCourse = () => {
                     id="lastName"
                     name="lastName"
                     type="number"
+                    value={courseDetails.courseRating}
+                    onChange={(e) =>
+                      setCourseDetails({
+                        ...courseDetails,
+                        courseRating: e.target.value,
+                      })
+                    }
                     required
                     placeholder="Enter Course Rating"
                     className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
@@ -228,8 +241,13 @@ const CreateCourse = () => {
                   </label>
                   <input
                     type="text"
-                    value={thumbnail}
-                    onChange={(e) => setThumbnail(e.target.value)}
+                    value={courseDetails.courseImage}
+                    onChange={(e) =>
+                      setCourseDetails({
+                        ...courseDetails,
+                        courseImage: e.target.value,
+                      })
+                    }
                     className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                     placeholder="https://..."
                   />
@@ -269,8 +287,13 @@ const CreateCourse = () => {
                   </label>
 
                   <select
-                    value={courseLevel}
-                    onChange={(e) => setCourseLevel(e.target.value)}
+                    value={courseDetails.courseLevel}
+                    onChange={(e) =>
+                      setCourseDetails({
+                        ...courseDetails,
+                        courseLevel: e.target.value,
+                      })
+                    }
                     required
                     className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   >
@@ -307,7 +330,7 @@ const CreateCourse = () => {
                 <label className="block text-sm font-medium text-gray-700">
                   Course Materials
                 </label>
-                {courseMaterial.map((material, index) => (
+                {courseDetails.courseMaterial.map((material, index) => (
                   <div
                     key={index}
                     className="flex flex-col md:flex-row md:items-center gap-4 border p-4 rounded-md"
@@ -343,7 +366,7 @@ const CreateCourse = () => {
                       className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                     />
 
-                    {courseMaterial.length > 1 && (
+                    {courseDetails.courseMaterial.length > 1 && (
                       <button
                         type="button"
                         onClick={() => removeMaterial(index)}
