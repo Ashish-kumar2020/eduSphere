@@ -5,8 +5,8 @@ const ObjectId = mongoose.ObjectId;
 const courseSchema = new Schema({
   title: { type: String, required: true }, // course name
   description: { type: String, required: true }, // about course
-  courseContent: { type: String, required: true }, // list of topics
-  courseLearning: { type: String, required: true }, // what you'll learn
+  courseContent: { type: [String], required: true }, // list of topics
+  courseLearning: { type: [String], required: true }, // what you'll learn
   courseAuthorDetail: {
     name: { type: String, required: true },
     experience: { type: String },
@@ -22,7 +22,7 @@ const courseSchema = new Schema({
       url: { type: String, required: true },
     },
   ],
-  courseRequirements: { type: String, required: true }, // prerequisites
+  courseRequirements: { type: [String], required: true }, // prerequisites
   courseCategory: { type: String, required: true }, // webdev, etc.
   isCourseActive: { type: Boolean, default: true },
   courseLevel: String,

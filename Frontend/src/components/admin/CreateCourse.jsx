@@ -1,6 +1,8 @@
 // src/pages/CreateCoursePage.jsx
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCourses } from "../../slice/fetchAllCoursesSlice";
+import { createCourse } from "../../slice/createCourseSlice";
 const CreateCourse = () => {
   const [courseDetails, setCourseDetails] = useState({
     title: "",
@@ -51,9 +53,41 @@ const CreateCourse = () => {
     });
   };
 
+  const dispatch = useDispatch();
+  const { data, isLoading, isError } = useSelector(
+    (state) => state.createCourseS
+  );
+
+  useEffect(() => {
+    if (data?.status === 200) {
+      setCourseDetails({
+        title: "",
+        description: "",
+        coursePrice: "",
+        courseValidatiy: "",
+        courseContentDuration: "",
+        courseRating: "",
+        studentEnrolled: "",
+        courseCategory: "",
+        courseRequirements: "",
+        courseAuthorDetail: {
+          name: "",
+          experience: "",
+          bio: "",
+        },
+        courseLearning: "",
+        courseContent: "",
+        courseLevel: "",
+        courseImage: "",
+        courseMaterial: [{ type: "video", title: "", url: "" }],
+      });
+    }
+  }, [data?.status]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(courseDetails);
+    dispatch(createCourse({ courseDetails }));
     alert("Course created successfully!");
   };
 
@@ -298,9 +332,9 @@ const CreateCourse = () => {
                     className="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   >
                     <option value="">Select level of course</option>
-                    <option value="Development">Intermediate</option>
-                    <option value="Business">Beginner</option>
-                    <option value="Design">Advanced</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Advanced">Advanced</option>
                   </select>
                 </div>
               </div>

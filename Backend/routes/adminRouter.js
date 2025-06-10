@@ -192,7 +192,7 @@ adminRouter.post("/createCourse", authentication, async (req, res) => {
     courseMaterial,
     courseRequirements,
     courseCategory,
-    isCourseActive,
+
     courseLevel,
     courseRating,
     studentEnrolled,
@@ -219,7 +219,6 @@ adminRouter.post("/createCourse", authentication, async (req, res) => {
       !courseRequirements ||
       courseRequirements.length === 0 ||
       !courseCategory ||
-      typeof isCourseActive !== "boolean" ||
       !adminID ||
       !courseLevel ||
       courseRating == null ||
@@ -253,7 +252,6 @@ adminRouter.post("/createCourse", authentication, async (req, res) => {
       courseMaterial,
       courseRequirements,
       courseCategory,
-      isCourseActive,
       courseID,
       courseLevel,
       courseRating,
@@ -276,7 +274,6 @@ adminRouter.post("/createCourse", authentication, async (req, res) => {
       courseMaterial,
       courseRequirements,
       courseCategory,
-      isCourseActive,
       courseID,
       courseLevel,
       courseRating,
@@ -289,6 +286,7 @@ adminRouter.post("/createCourse", authentication, async (req, res) => {
     res.status(200).json({
       message: "Course Created Successfully",
       courseID,
+      status: 200,
     });
   } catch (error) {
     console.error("Error during creating course", error);

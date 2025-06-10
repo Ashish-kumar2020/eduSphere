@@ -8,6 +8,8 @@ const AdminHeader = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    localStorage.removeItem("AdminToken");
+    localStorage.removeItem("AdminID");
     navigate("/adminSignup");
   };
 

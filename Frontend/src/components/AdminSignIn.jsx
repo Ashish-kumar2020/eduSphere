@@ -21,6 +21,9 @@ function AdminSignIn() {
     },
     onSuccess: (res) => {
       if (res.data.status === 200) {
+        console.log(res.data.token);
+        localStorage.setItem("AdminToken", res.data.token);
+        localStorage.setItem("AdminID", res.data.searchUser.adminID);
         setFormData({
           email: "",
           password: "",

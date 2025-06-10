@@ -12,7 +12,7 @@ app.use(
   cors({
     origin: "http://localhost:5173", // Allow this specific origin
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed HTTP methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+    allowedHeaders: ["Content-Type", "Authorization", "token"], // Allowed headers
   })
 );
 app.use("/api/v1/admin", adminRouter);
