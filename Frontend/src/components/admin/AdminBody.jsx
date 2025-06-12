@@ -36,7 +36,7 @@ const AdminBody = () => {
 
           {/* View My Courses */}
           <div
-            onClick={() => navigate("/admin/my-courses")}
+            onClick={() => navigate("adminCourses")}
             className="p-8 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer border border-teal-100 hover:border-teal-300"
           >
             <div className="flex items-center gap-4 mb-4">

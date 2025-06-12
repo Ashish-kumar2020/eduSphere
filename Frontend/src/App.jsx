@@ -1,9 +1,5 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import Signin from "./components/UserSignin";
-import Signup from "./components/UserSignup";
+
 import HomePage from "./pages/HomePage";
 import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router";
@@ -91,6 +87,10 @@ function App() {
         {
           path: "profile",
           element: <AdminProfile />,
+        },
+        {
+          path: "adminCourses",
+          element: <AdminCourses />,
         },
       ],
     },

@@ -30,7 +30,7 @@ const CourseCard = ({ course }) => {
       : "bg-red-500";
 
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+    <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100 cursor-pointer">
       {/* Course Image */}
       <div className="relative">
         <img
