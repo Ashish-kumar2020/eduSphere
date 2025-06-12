@@ -1,7 +1,7 @@
 import React from "react";
 import { Star, Clock, BarChart, Users } from "lucide-react";
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, isAdmin }) => {
   const {
     title,
     courseAuthorDetail,
@@ -12,9 +12,6 @@ const CourseCard = ({ course }) => {
     courseLevel,
     coursePrice,
     courseRating,
-    courseValidatiy,
-    description,
-    isCourseActive,
     studentEnrolled,
   } = course;
 
@@ -30,7 +27,10 @@ const CourseCard = ({ course }) => {
       : "bg-red-500";
 
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100 cursor-pointer">
+    <div
+      key={courseID}
+      className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100 cursor-pointer"
+    >
       {/* Course Image */}
       <div className="relative">
         <img
@@ -100,9 +100,20 @@ const CourseCard = ({ course }) => {
               </span>
             )}
           </div>
-          <button className="bg-teal-700 hover:bg-teal-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-300">
-            Add to Cart
-          </button>
+          {isAdmin ? (
+            <>
+              <button className="bg-red-700 hover:bg-red-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-300">
+                Edit Course
+              </button>
+              <button className="bg-red-700 hover:bg-red-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-300">
+                Delete Course
+              </button>
+            </>
+          ) : (
+            <button className="bg-teal-700 hover:bg-teal-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-300">
+              Add to Cart
+            </button>
+          )}
         </div>
       </div>
     </div>
