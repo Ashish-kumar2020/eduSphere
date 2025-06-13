@@ -2,10 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import fetchAllCoursesReducer from "../slice/fetchAllCoursesSlice";
 import createCourseSlice from "../slice/createCourseSlice";
 import fetchAdminCoursesSlice from "../slice/fetchAdminCourses";
+import deleteCourseSlice from "../slice/deleteCourseSlice";
 export const store = configureStore({
   reducer: {
     fetchAllCourses: fetchAllCoursesReducer,
     createCourseS: createCourseSlice,
     fetchAllAdminCourse: fetchAdminCoursesSlice,
+    deleteAdminCourse: deleteCourseSlice,
   },
 });

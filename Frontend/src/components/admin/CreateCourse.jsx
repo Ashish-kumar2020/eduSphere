@@ -1,7 +1,7 @@
 // src/pages/CreateCoursePage.jsx
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCourses } from "../../slice/fetchAllCoursesSlice";
+
 import { createCourse } from "../../slice/createCourseSlice";
 const CreateCourse = () => {
   const [courseDetails, setCourseDetails] = useState({

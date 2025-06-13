@@ -1,6 +1,7 @@
 import React from "react";
 import { Star, Clock, BarChart, Users } from "lucide-react";
-
+import { useDispatch } from "react-redux";
+import deleteAdminCourse from "../slice/deleteCourseSlice"
 const CourseCard = ({ course, isAdmin }) => {
   const {
     title,
@@ -15,6 +16,11 @@ const CourseCard = ({ course, isAdmin }) => {
     studentEnrolled,
   } = course;
 
+  const dispatch = useDispatch();
+  const deleteSelectedCourse = ()=>{
+    console.log("course deleted")
+    dispatch(deleteAdminCourse({courseID}))
+  }
   const discount = coursePrice
     ? Math.round(((coursePrice - 100) / coursePrice) * 100)
     : 0;
@@ -102,10 +108,7 @@ const CourseCard = ({ course, isAdmin }) => {
           </div>
           {isAdmin ? (
             <>
-              <button className="bg-red-700 hover:bg-red-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-300">
-                Edit Course
-              </button>
-              <button className="bg-red-700 hover:bg-red-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-300">
+              <button className="bg-red-700 hover:bg-red-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-300" onClick={deleteSelectedCourse}>
                 Delete Course
               </button>
             </>
