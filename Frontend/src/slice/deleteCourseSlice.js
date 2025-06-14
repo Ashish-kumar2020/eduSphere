@@ -1,28 +1,38 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
+import axios from "axios";
 export const deleteCourse = createAsyncThunk(
   "deleteCourse",
-  async (courseID) => {
-    const adminID = localStorage.getItem("AdminID");
-    let config = {
-      adminID,
-      courseID,
-    };
-    const response = await axios.delete(
-      process.env.VITE_API_URL_DELETE_ADMIN_COURSE,
-      {
-        data: {
-          adminID,
-          courseID,
-        },
-      }
-    );
-    return response.data;
+  async ({ courseID }, { rejectWithValue }) => {
+    try {
+      const adminID = localStorage.getItem("AdminID");
+      const token= localStorage.getItem("AdminToken")
+      console.log("Calling API with:", { adminID, courseID });
+
+      const response = await axios.delete(
+        import.meta.env.VITE_API_URL_DELETE_ADMIN_COURSE,
+        {
+          data: {
+            adminID,
+            courseID,
+          
+          },
+          headers: {
+            token: token,
+          },
+        }
+      );
+      console.log("API success:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Delete failed", error);
+      return rejectWithValue(error.response?.data || "Unknown error");
+    }
   }
 );
 
+
 const deleteCourseSlice = createSlice({
-  name: "deleteCOurse",
+  name: "deleteCourse",
   initialState: {
     isError: false,
     isLoading: false,

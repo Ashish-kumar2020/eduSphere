@@ -327,6 +327,7 @@ adminRouter.delete("/deleteCourse", authentication, async (req, res) => {
     await searchCourse.save();
     return res.status(200).json({
       message: "Course Deleted Successfully",
+      status: 200
     });
   } catch (error) {
     console.error("Error while deleting course:", error);

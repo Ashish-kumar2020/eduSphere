@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Star, Clock, BarChart, Users } from "lucide-react";
-import { useDispatch } from "react-redux";
-import deleteAdminCourse from "../slice/deleteCourseSlice"
+import { useDispatch,useSelector } from "react-redux";
+import {deleteCourse} from "../slice/deleteCourseSlice"
+import { fetchAdminCourses } from "../slice/fetchAdminCourses";
+
 const CourseCard = ({ course, isAdmin }) => {
   const {
     title,
@@ -17,10 +19,17 @@ const CourseCard = ({ course, isAdmin }) => {
   } = course;
 
   const dispatch = useDispatch();
-  const deleteSelectedCourse = ()=>{
-    console.log("course deleted")
-    dispatch(deleteAdminCourse({courseID}))
-  }
+  const deleteSelectedCourse = async () => {
+    try {
+      const res = await dispatch(deleteCourse({ courseID })).unwrap();
+      if (res.status === 200) {
+        dispatch(fetchAdminCourses());
+      }
+    } catch (err) {
+      console.error("Error deleting course:", err);
+    }
+  };
+  
   const discount = coursePrice
     ? Math.round(((coursePrice - 100) / coursePrice) * 100)
     : 0;
