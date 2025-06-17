@@ -426,6 +426,7 @@ adminRouter.post("/fetchCurrentCourse", authentication, async (req, res) => {
     res.status(200).json({
       messsage: "Fetched Current course",
       selectedCourse,
+      status: 200
     });
   } catch (error) {
     console.error("Error while Fetching course:", error);

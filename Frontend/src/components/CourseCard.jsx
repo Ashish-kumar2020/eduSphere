@@ -3,6 +3,8 @@ import { Star, Clock, BarChart, Users } from "lucide-react";
 import { useDispatch,useSelector } from "react-redux";
 import {deleteCourse} from "../slice/deleteCourseSlice"
 import { fetchAdminCourses } from "../slice/fetchAdminCourses";
+import {fetchCurrentAdminCourse} from "../slice/fetchCurrentCourse";
+import {useNavigate} from "react-router-dom"
 
 const CourseCard = ({ course, isAdmin }) => {
   const {
@@ -19,7 +21,9 @@ const CourseCard = ({ course, isAdmin }) => {
   } = course;
 
   const dispatch = useDispatch();
-  const deleteSelectedCourse = async () => {
+  const navigate = useNavigate();
+  const deleteSelectedCourse = async (e) => {
+    e.stopPropagation();
     try {
       const res = await dispatch(deleteCourse({ courseID })).unwrap();
       if (res.status === 200) {
@@ -29,6 +33,19 @@ const CourseCard = ({ course, isAdmin }) => {
       console.error("Error deleting course:", err);
     }
   };
+
+ const openSelectedCourse = async (courseID) => {
+  try {
+    const res = await dispatch(fetchCurrentAdminCourse({ courseID })).unwrap();
+    if (res.status === 200) {
+      navigate("/adminHomepage/currentCourse");
+
+    }
+  } catch (error) {
+    console.log("Error in fetching course Details", error);
+  }
+};
+
   
   const discount = coursePrice
     ? Math.round(((coursePrice - 100) / coursePrice) * 100)
@@ -42,6 +59,7 @@ const CourseCard = ({ course, isAdmin }) => {
       : "bg-red-500";
 
   return (
+    
     <div
       key={courseID}
       className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100 cursor-pointer"
@@ -61,7 +79,7 @@ const CourseCard = ({ course, isAdmin }) => {
       </div>
 
       {/* Course Content */}
-      <div className="p-5">
+      <div className="p-5" onClick={()=>openSelectedCourse(courseID)}>
         <div className="flex items-center text-sm text-gray-500 mb-2">
           <span
             className={`inline-block w-2 h-2 rounded-full mr-2 ${levelColor}`}
@@ -73,7 +91,7 @@ const CourseCard = ({ course, isAdmin }) => {
           {title}
         </h3>
 
-        <p className="text-gray-600 text-sm mb-4">
+        <p className="text-gray-600 text-sm mb-4" >
           by{" "}
           <span className="font-medium text-purple-700">
             {courseAuthorDetail.name}

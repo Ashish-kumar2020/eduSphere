@@ -19,6 +19,7 @@ import CreateCourse from "./components/admin/CreateCourse";
 import AdminBody from "./components/admin/AdminBody";
 import AdminCourses from "./components/admin/AdminCourses";
 import AdminProfile from "./components/admin/AdminProfile";
+import AdminCurrentCoursePage from "./components/admin/AdminCurrentCoursePage";
 
 function App() {
   const router = createBrowserRouter([
@@ -92,6 +93,10 @@ function App() {
           path: "adminCourses",
           element: <AdminCourses />,
         },
+        {
+          path: "currentCourse",
+          element: <AdminCurrentCoursePage/>
+        }
       ],
     },
   ]);
