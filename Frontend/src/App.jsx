@@ -22,6 +22,7 @@ import AdminProfile from "./components/admin/AdminProfile";
 import AdminCurrentCoursePage from "./components/admin/AdminCurrentCoursePage";
 import AdminEditCoursePage from "./components/admin/AdminEditCoursePage";
 import UserBody from "./components/user/UserBody";
+import UserProfile from "./components/user/UserProfile";
 
 function App() {
   const router = createBrowserRouter([
@@ -79,6 +80,10 @@ function App() {
             path: "allCourses",
             element: <FeaturedCourses />,
           },
+          {
+            path: "userProfile",
+            element: <UserProfile/>
+          }
         
       ]
     },

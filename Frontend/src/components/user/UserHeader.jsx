@@ -33,13 +33,13 @@ const UserHeader = () => {
             My Courses
           </Link>
           <Link
-            to="/explore"
+            to="allCourses"
             className="text-gray-700 hover:text-blue-700 font-medium transition-colors"
           >
             Explore
           </Link>
           <Link
-            to="/profile"
+            to="userProfile"
             className="text-gray-700 hover:text-blue-700 font-medium transition-colors"
           >
             Profile
