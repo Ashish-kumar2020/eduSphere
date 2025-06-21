@@ -10,6 +10,9 @@ import {
 const UserBody = () => {
   const navigate = useNavigate();
 
+  const openBrowseCourseSection = ()=>{
+    navigate("allCourses")
+  }
   return (
     <section className="pt-24 pb-16 md:pt-32 md:pb-24 min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 md:px-6">
@@ -25,10 +28,10 @@ const UserBody = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Explore Courses */}
           <div
-            onClick={() => navigate("/explore")}
+            onClick={openBrowseCourseSection}
             className="p-8 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer border border-blue-100 hover:border-blue-300"
           >
-            <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center gap-4 mb-4" >
               <BookOpen size={32} className="text-blue-600" />
               <h2 className="text-xl font-semibold text-gray-800">
                 Browse Courses

@@ -9,6 +9,7 @@ const categories = ["All", "Development", "Business", "Design", "Marketing"];
 const FeaturedCourses = () => {
   const [activeCategory, setActiveCategory] = useState("All");
 
+  const userID = localStorage.getItem("userID")
   const dispatch = useDispatch();
   const { data, isLoading, isError } = useSelector(
     (state) => state.fetchAllCourses || {}
@@ -17,7 +18,8 @@ const FeaturedCourses = () => {
     dispatch(fetchCourses());
   }, [dispatch]);
 
-  const popularCourses = data?.fetchAllCourses.slice(0, 6);
+  let popularCourses;
+  userID ?  popularCourses =  data?.fetchAllCourses: data?.fetchAllCourses.slice(0, 6)
 
   return (
     <section className="py-16 bg-white" id="courses">
@@ -54,11 +56,11 @@ const FeaturedCourses = () => {
           ))}
         </div>
 
-        <div className="text-center mt-12">
+      {  !userID && <div className="text-center mt-12">
           <button className="bg-white border-2 border-teal-700 text-teal-700 hover:bg-teal-50 font-medium px-6 py-3 rounded-lg transition-all duration-300">
             View All Courses
           </button>
-        </div>
+        </div>}
       </div>
     </section>
   );

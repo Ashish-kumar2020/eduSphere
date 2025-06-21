@@ -74,7 +74,12 @@ function App() {
         {
           index: true,
           element: <UserBody/>
-        }
+        },
+          {
+            path: "allCourses",
+            element: <FeaturedCourses />,
+          },
+        
       ]
     },
     {
