@@ -5,6 +5,7 @@ import fetchAdminCoursesSlice from "../slice/fetchAdminCourses";
 import deleteCourseSlice from "../slice/deleteCourseSlice";
 import fetchCurrentCourseSlice from "../slice/fetchCurrentCourse";
 import editCourseAdminSlice from "../slice/editCourseSlice"
+import fetchAdminDetailsSlice from "../slice/fetchAdmindetails"
 export const store = configureStore({
   reducer: {
     fetchAllCourses: fetchAllCoursesReducer,
@@ -12,6 +13,8 @@ export const store = configureStore({
     fetchAllAdminCourse: fetchAdminCoursesSlice,
     deleteAdminCourse: deleteCourseSlice,
     fetchAdminCurrentCourse: fetchCurrentCourseSlice,
-    editAdminCurrentCourse: editCourseAdminSlice
+    editAdminCurrentCourse: editCourseAdminSlice,
+    fetchAdminProfileDetails : fetchAdminDetailsSlice
+
   },
 });
