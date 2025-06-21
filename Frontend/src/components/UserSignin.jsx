@@ -23,6 +23,8 @@ function UserSignIn() {
     },
     onSuccess: (res) => {
       if (res.data.status === 200) {
+        localStorage.setItem("userID",res.data.searchUser.userID);
+        localStorage.setItem("userToken", res.data.token);
         setFormData({
           email: "",
           password: "",

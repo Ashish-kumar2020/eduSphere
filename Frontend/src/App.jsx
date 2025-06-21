@@ -21,6 +21,7 @@ import AdminCourses from "./components/admin/AdminCourses";
 import AdminProfile from "./components/admin/AdminProfile";
 import AdminCurrentCoursePage from "./components/admin/AdminCurrentCoursePage";
 import AdminEditCoursePage from "./components/admin/AdminEditCoursePage";
+import UserBody from "./components/user/UserBody";
 
 function App() {
   const router = createBrowserRouter([
@@ -69,6 +70,12 @@ function App() {
     {
       path: "/userHomePage",
       element: <UsersHomePage />,
+      children: [
+        {
+          index: true,
+          element: <UserBody/>
+        }
+      ]
     },
     {
       path: "/adminHomepage",
@@ -103,6 +110,7 @@ function App() {
         }
       ],
     },
+   
   ]);
   return <RouterProvider router={router} />;
 }
