@@ -1,16 +1,22 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Star, Users, Clock, BarChart, BadgeCheck } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const AdminCurrentCoursePage = () => {
   const { data, isLoading, isError } = useSelector((state) => state.fetchAdminCurrentCourse);
-
+  const navigate = useNavigate()
   if (isLoading)
     return <h1 className="text-center mt-20 text-xl font-semibold text-blue-500 animate-pulse">Fetching course...</h1>;
   if (isError)
     return <h1 className="text-center mt-20 text-red-600 font-bold">Error loading course data.</h1>;
   if (!data)
     return <h1 className="text-center mt-20 text-gray-500">No course found.</h1>;
+
+
+   const handleEditCourse = ()=>{
+    navigate("/adminHomepage/editCurrentCourse")
+   }
 
   const {
     title,
@@ -125,8 +131,16 @@ const AdminCurrentCoursePage = () => {
           </div>
 
           {/* Pricing */}
+          <div className='flex items-center justify-between'>
           <div className="text-3xl font-bold text-right text-green-700 mt-8">
             ₹{coursePrice}
+          </div>
+          <div className="text-3xl font-bold text-right text-green-700 mt-8">
+          <button className="bg-teal-700 hover:bg-teal-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-300" onClick={handleEditCourse}>
+              Edit Course
+            </button>
+          </div>
+
           </div>
         </div>
       </div>

@@ -353,50 +353,62 @@ adminRouter.put("/editCourse", authentication, async (req, res) => {
     courseRequirements,
     courseCategory,
     isCourseActive,
+    courseLevel,
+    courseRating,
+    studentEnrolled,
+    courseImage,
+    courseContentDuration
   } = req.body;
+
   try {
     if (!adminID || !courseID) {
       return res.status(400).json({
-        message: "All Fields Are mandatory, Please connect with your operator",
+        message: "adminID and courseID are required",
       });
     }
-    const searchForAdmin = await adminModel.findOne({ adminID });
-    if (!searchForAdmin) {
-      return res.status(400).json({
-        message: "Admin ID Not Found, Please connect with your operator",
-      });
-    }
-    if (title) searchForAdmin.adminCourses.title = title;
-    if (description) searchForAdmin.adminCourses.description = description;
-    if (courseContent)
-      searchForAdmin.adminCourses.courseContent = courseContent;
-    if (courseLearning)
-      searchForAdmin.adminCourses.courseLearning = courseLearning;
-    if (courseAuthorDetail)
-      searchForAdmin.adminCourses.courseAuthorDetail = courseAuthorDetail;
-    if (coursePrice) searchForAdmin.adminCourses.coursePrice = coursePrice;
-    if (courseValidatiy)
-      searchForAdmin.adminCourses.courseValidatiy = courseValidatiy;
-    if (courseMaterial)
-      searchForAdmin.adminCourses.courseMaterial = courseMaterial;
-    if (courseRequirements)
-      searchForAdmin.adminCourses.courseRequirements = courseRequirements;
-    if (courseCategory)
-      searchForAdmin.adminCourses.courseCategory = courseCategory;
-    if (typeof isCourseActive === "boolean")
-      searchForAdmin.adminCourses.isCourseActive = isCourseActive;
 
-    await searchForAdmin.save();
+    const admin = await adminModel.findOne({ adminID });
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    
+    const courseToEdit = admin.adminCourses.find(
+      (course) => course.courseID.toString() === courseID
+    );
+
+    if (!courseToEdit) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+  
+    if (title) courseToEdit.title = title;
+    if (description) courseToEdit.description = description;
+    if (courseContent) courseToEdit.courseContent = courseContent;
+    if (courseLearning) courseToEdit.courseLearning = courseLearning;
+    if (courseAuthorDetail) courseToEdit.courseAuthorDetail = courseAuthorDetail;
+    if (coursePrice) courseToEdit.coursePrice = coursePrice;
+    if (courseValidatiy) courseToEdit.courseValidatiy = courseValidatiy;
+    if (courseMaterial) courseToEdit.courseMaterial = courseMaterial;
+    if (courseRequirements) courseToEdit.courseRequirements = courseRequirements;
+    if (courseCategory) courseToEdit.courseCategory = courseCategory;
+    if (typeof isCourseActive === "boolean") courseToEdit.isCourseActive = isCourseActive;
+    if (courseLevel) courseToEdit.courseLevel = courseLevel;
+    if (courseRating) courseToEdit.courseRating = courseRating;
+    if (studentEnrolled) courseToEdit.studentEnrolled = studentEnrolled;
+    if (courseImage) courseToEdit.courseImage = courseImage;
+    if (courseContentDuration) courseToEdit.courseContentDuration = courseContentDuration;
+
+   
+    await admin.save();
+
+    return res.status(200).json({ message: "Course Edited Successfully" , status: 200});
   } catch (error) {
-    console.error("Error while Editing course:", error);
-    return res.status(500).json({
-      message: "Internal Server Error",
-    });
+    console.error("Error while editing course:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
   }
-  res.status(200).json({
-    messsage: "Course Edited Successfully",
-  });
 });
+
 
 // fetch selected course
 adminRouter.post("/fetchCurrentCourse", authentication, async (req, res) => {

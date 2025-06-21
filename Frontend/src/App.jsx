@@ -20,6 +20,7 @@ import AdminBody from "./components/admin/AdminBody";
 import AdminCourses from "./components/admin/AdminCourses";
 import AdminProfile from "./components/admin/AdminProfile";
 import AdminCurrentCoursePage from "./components/admin/AdminCurrentCoursePage";
+import AdminEditCoursePage from "./components/admin/AdminEditCoursePage";
 
 function App() {
   const router = createBrowserRouter([
@@ -96,6 +97,9 @@ function App() {
         {
           path: "currentCourse",
           element: <AdminCurrentCoursePage/>
+        },{
+          path: "editCurrentCourse",
+          element: <AdminEditCoursePage/>
         }
       ],
     },
