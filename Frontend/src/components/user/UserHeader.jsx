@@ -7,9 +7,9 @@ const UserHeader = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("UserToken");
-    localStorage.removeItem("UserID");
-    navigate("/usersignin");
+    localStorage.removeItem("userToken");
+    localStorage.removeItem("userID");
+    navigate("/signin");
   };
 
   return (
