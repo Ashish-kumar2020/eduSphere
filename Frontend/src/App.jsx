@@ -24,6 +24,7 @@ import AdminEditCoursePage from "./components/admin/AdminEditCoursePage";
 import UserBody from "./components/user/UserBody";
 import UserProfile from "./components/user/UserProfile";
 import UserPurchasedCourses from "./components/user/UserPurchasedCourses";
+import UserCourseDetail from "./components/user/UserCourseDetails";
 
 function App() {
   const router = createBrowserRouter([
@@ -88,6 +89,10 @@ function App() {
           {
             path: "userpurchasedcourses",
             element: <UserPurchasedCourses/>
+          },
+          {
+            path: "userselectedcourse/:courseID",
+            element: <UserCourseDetail/>
           }
         
       ]

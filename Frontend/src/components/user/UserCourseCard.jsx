@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Star, Clock, BarChart, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSelectedUserCourse } from "../../slice/fetchUserSelectedCourse";
 
 const UserCourseCard = ({ course }) => {
   const {
@@ -16,11 +18,26 @@ const UserCourseCard = ({ course }) => {
   } = course;
 
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
-  const openCourseDetails = () => {
-    navigate(`/user/course/${courseID}`);
+  // const {data,isLoading,isError} = useSelector((state)=> state.fetchUserSelectedCourse)
+
+  const openCourseDetails = async (e) => {
+    // e.stopPropagation();
+    try {
+      const res =await dispatch(fetchSelectedUserCourse({courseID})).unwrap();
+      if(res.status == 200){
+        console.log("ROUTED");
+        navigate(`/userHomePage/userselectedcourse/${courseID}`);
+      }
+    } catch (err) {
+      console.error("Error while navigating to selected course course:", err);
+    }
+    
+    
   };
-
+  
+  
   const levelColor =
     courseLevel === "Beginner"
       ? "bg-green-500"
@@ -94,3 +111,5 @@ const UserCourseCard = ({ course }) => {
 };
 
 export default UserCourseCard;
+
+// /searchedCourse
