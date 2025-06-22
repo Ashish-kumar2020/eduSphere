@@ -44,7 +44,7 @@ const UserBody = () => {
 
           {/* My Courses */}
           <div
-            onClick={() => navigate("/mycourses")}
+            onClick={() => navigate("userpurchasedcourses")}
             className="p-8 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer border border-blue-100 hover:border-blue-300"
           >
             <div className="flex items-center gap-4 mb-4">
@@ -60,13 +60,13 @@ const UserBody = () => {
 
           {/* Continue Learning */}
           <div
-            onClick={() => navigate("/continue")}
+            onClick={() => navigate("allCourses")}
             className="p-8 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer border border-blue-100 hover:border-blue-300"
           >
             <div className="flex items-center gap-4 mb-4">
               <PlayCircle size={32} className="text-blue-600" />
               <h2 className="text-xl font-semibold text-gray-800">
-                Continue Learning
+                Explore All Courses
               </h2>
             </div>
             <p className="text-gray-600">
@@ -76,7 +76,7 @@ const UserBody = () => {
 
           {/* Profile Settings */}
           <div
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate("userProfile")}
             className="p-8 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer border border-blue-100 hover:border-blue-300"
           >
             <div className="flex items-center gap-4 mb-4">
