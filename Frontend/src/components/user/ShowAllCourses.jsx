@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { Star, Clock, BarChart, Users } from "lucide-react";
 import { useDispatch,useSelector } from "react-redux";
-import {deleteCourse} from "../slice/deleteCourseSlice"
-import { fetchAdminCourses } from "../slice/fetchAdminCourses";
-import {fetchCurrentAdminCourse} from "../slice/fetchCurrentCourse";
-import {useNavigate} from "react-router-dom"
-import { enrollUserCourse } from "../slice/enrolCourseSlice";
 
-const CourseCard = ({ course, isAdmin }) => {
+import {useNavigate} from "react-router-dom"
+import { enrollUserCourse } from "../../slice/enrolCourseSlice";
+
+
+const ShowAllCourses = ({ course, isAdmin }) => {
   const {
     title,
     courseAuthorDetail,
@@ -23,29 +22,28 @@ const CourseCard = ({ course, isAdmin }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const deleteSelectedCourse = async (e) => {
-    e.stopPropagation();
+  
+
+//  const openSelectedCourse = async (courseID) => {
+//   try {
+//     const res = await dispatch(fetchCurrentAdminCourse({ courseID })).unwrap();
+//     if (res.status === 200) {
+//       navigate("/adminHomepage/currentCourse");
+
+//     }
+//   } catch (error) {
+//     console.log("Error in fetching course Details", error);
+//   }
+// };
+
+const purchaseCourse = ()=>{
+    console.log("course purchased successfully")
     try {
-      const res = await dispatch(deleteCourse({ courseID })).unwrap();
-      if (res.status === 200) {
-        dispatch(fetchAdminCourses());
-      }
-    } catch (err) {
-      console.error("Error deleting course:", err);
+        dispatch(enrollUserCourse({courseID}))
+    } catch (error) {
+        console.log("Error while enrolling the course",error)
     }
-  };
-
- const openSelectedCourse = async (courseID) => {
-  try {
-    const res = await dispatch(fetchCurrentAdminCourse({ courseID })).unwrap();
-    if (res.status === 200) {
-      navigate("/adminHomepage/currentCourse");
-
-    }
-  } catch (error) {
-    console.log("Error in fetching course Details", error);
-  }
-};
+}
 
 
 
@@ -82,7 +80,7 @@ const CourseCard = ({ course, isAdmin }) => {
       </div>
 
       {/* Course Content */}
-      <div className="p-5" onClick={()=>openSelectedCourse(courseID)}>
+      <div className="p-5" /*onClick={()=>openSelectedCourse(courseID)}*/>
         <div className="flex items-center text-sm text-gray-500 mb-2">
           <span
             className={`inline-block w-2 h-2 rounded-full mr-2 ${levelColor}`}
@@ -136,21 +134,15 @@ const CourseCard = ({ course, isAdmin }) => {
               </span>
             )}
           </div>
-          {isAdmin ? (
-            <>
-              <button className="bg-red-700 hover:bg-red-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-300" onClick={deleteSelectedCourse}>
-                Delete Course
-              </button>
-            </>
-          ) : (
+          
             <button className="bg-teal-700 hover:bg-teal-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-300" onClick={purchaseCourse}>
               Purchase Course
             </button>
-          )}
+          
         </div>
       </div>
     </div>
   );
 };
 
-export default CourseCard;
+export default ShowAllCourses;

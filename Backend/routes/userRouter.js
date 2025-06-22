@@ -211,6 +211,7 @@ userRouter.post("/enrollCourse", authentication, async (req, res) => {
     return res.status(200).json({
       message: "Course Purchased Successfully",
       user,
+      status: 200
     });
   } catch (error) {
     console.error("Error during Purchasing the course", error);

@@ -3,6 +3,7 @@ import CourseCard from "./CourseCard";
 import { coursesData } from "../data/coursesData";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCourses } from "../slice/fetchAllCoursesSlice";
+import ShowAllCourses from "./user/ShowAllCourses";
 
 const categories = ["All", "Development", "Business", "Design", "Marketing"];
 
@@ -50,17 +51,26 @@ const FeaturedCourses = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+       {!userID ? <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {popularCourses?.map((course) => (
             <CourseCard key={course._id} course={course} />
           ))}
         </div>
+        :
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {popularCourses?.map((course) => (
+            <ShowAllCourses key={course._id} course={course} />
+          ))}
+        </div>
+        }
 
       {  !userID && <div className="text-center mt-12">
           <button className="bg-white border-2 border-teal-700 text-teal-700 hover:bg-teal-50 font-medium px-6 py-3 rounded-lg transition-all duration-300">
             View All Courses
           </button>
+          
         </div>}
+        
       </div>
     </section>
   );
