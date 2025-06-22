@@ -169,51 +169,57 @@ userRouter.post("/purchasedCourses", authentication, async (req, res) => {
   }
 });
 
-// course purchase endpoint
+
+// POST /enrollCourse
 userRouter.post("/enrollCourse", authentication, async (req, res) => {
-  const { userID, courseID, adminID } = req.body;
+  const { userID, courseID } = req.body;
+
   try {
-    if (!userID || !courseID || !adminID) {
+    if (!userID || !courseID) {
       return res.status(400).json({
-        message: "All Fileds are mandatory",
+        message: "All fields are mandatory",
       });
     }
-    const searchForUser = await userModel.findOne({ userID });
-    if (!searchForUser) {
+
+    const user = await userModel.findOne({ userID });
+    if (!user) {
       return res.status(400).json({
         message: "No User Found",
       });
     }
 
-    const searchForAdmin = await adminModel.findOne({ adminID });
-    if (!searchForAdmin) {
-      return res.status(400).json({
-        message: "Admin Id not valid, Please connect with the operator",
+    const course = await courseModel.findOne({ courseID }); // Assuming courseModel exists
+    if (!course) {
+      return res.status(404).json({
+        message: "Course not found",
       });
     }
-    const searchForCourse = new Types.ObjectId(courseID);
-    const findCourse = searchForAdmin.adminCourses.findIndex((t) =>
-      t.courseID.equals(searchForCourse)
+
+    // Prevent duplicate enrollment
+    const alreadyEnrolled = user.userCourses.some((c) =>
+      c.courseID.equals(course.courseID)
     );
-    if (findCourse === -1) {
+    if (alreadyEnrolled) {
       return res.status(400).json({
-        message: "Course with this ID is not present",
+        message: "User already enrolled in this course",
       });
     }
-    const purchasedCourses = searchForAdmin.adminCourses[findCourse];
-    searchForUser.userCourses.push(purchasedCourses);
-    await searchForUser.save();
+
+    user.userCourses.push(course);
+    await user.save();
+
     return res.status(200).json({
       message: "Course Purchased Successfully",
-      searchForUser,
+      user,
     });
   } catch (error) {
-    console.log("Error during Purchasing the course", error);
-    res.status(500).json({
+    console.error("Error during Purchasing the course", error);
+    return res.status(500).json({
       message: "Internal Server Error",
     });
   }
 });
+
 
 // open any selected contes - when user click on any of the purchased courses this will return the detials of that course
 userRouter.post("/selectedCourse", authentication, async (req, res) => {
