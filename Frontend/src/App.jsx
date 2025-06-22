@@ -23,6 +23,7 @@ import AdminCurrentCoursePage from "./components/admin/AdminCurrentCoursePage";
 import AdminEditCoursePage from "./components/admin/AdminEditCoursePage";
 import UserBody from "./components/user/UserBody";
 import UserProfile from "./components/user/UserProfile";
+import UserPurchasedCourses from "./components/user/UserPurchasedCourses";
 
 function App() {
   const router = createBrowserRouter([
@@ -83,6 +84,10 @@ function App() {
           {
             path: "userProfile",
             element: <UserProfile/>
+          },
+          {
+            path: "userpurchasedcourses",
+            element: <UserPurchasedCourses/>
           }
         
       ]

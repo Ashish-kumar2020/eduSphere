@@ -27,7 +27,7 @@ const UserHeader = () => {
             Home
           </Link>
           <Link
-            to="/mycourses"
+            to="userpurchasedcourses"
             className="text-gray-700 hover:text-blue-700 font-medium transition-colors"
           >
             My Courses

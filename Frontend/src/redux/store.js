@@ -7,6 +7,7 @@ import fetchCurrentCourseSlice from "../slice/fetchCurrentCourse";
 import editCourseAdminSlice from "../slice/editCourseSlice"
 import fetchAdminDetailsSlice from "../slice/fetchAdmindetails"
 import fetchUserProfileDetailsSlice from "../slice/fetchUserProfileDetailsSlice";
+import fetchUserPurchasedCoursesSlice from "../slice/fetchUserPurchasedCourseSlice";
 export const store = configureStore({
   reducer: {
     fetchAllCourses: fetchAllCoursesReducer,
@@ -18,6 +19,7 @@ export const store = configureStore({
     fetchAdminProfileDetails : fetchAdminDetailsSlice,
 
     // User
-    fetchUserProfileDetails : fetchUserProfileDetailsSlice
+    fetchUserProfileDetails : fetchUserProfileDetailsSlice,
+    fetchUSerPurchasedCourses: fetchUserPurchasedCoursesSlice
   },
 });
